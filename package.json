@@ -1,14 +1,11 @@
 {
-  "devDependencies": {
-    "husky": "^8.0.2",
-    "prettier": "2.8.0"
-  },
-  "scripts": {
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "prettier --write ."
+    "devDependencies": {
+        "@prettier/plugin-php": "^0.19.2",
+        "husky": "^8.0.2",
+        "prettier": "^2.8.0"
+    },
+    "scripts": {
+        "prepare": "husky install",
+        "pre-commit": "prettier --write . && git add -A ."
     }
-  }
 }
