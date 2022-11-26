@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eManga</title>
-</head>
+use Framework\Request\Request;
+use Framework\Routing;
 
-<body>
-</body>
+require '../vendor/autoload.php';
 
-</html>
+//call the routing class
+
+//call the request class
+$request = Request::fromGlobals();
+//call the route method
+Routing\Routing::init()->route($request);

@@ -2,11 +2,16 @@
     "name": "noe/e-manga",
     "require": {
         "doctrine/lexer": "^1.2",
-        "twig/twig": "^3.4"
+        "twig/twig": "^3.4",
+        "nyholm/psr7-server": "^1.0",
+        "nikic/fast-route": "^1.3",
+        "nyholm/psr7": "^1.5"
     },
     "autoload": {
         "psr-4": {
-            "Noe\\EManga\\": "src/"
+            "Noe\\EManga\\": "src/",
+            "App\\": "src/App",
+            "Framework\\": "src/Framework"
         }
     },
     "authors": [
