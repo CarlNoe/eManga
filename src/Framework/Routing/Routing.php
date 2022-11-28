@@ -4,7 +4,7 @@ namespace Framework\Routing;
 
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
-use App\Controller\Homepage;
+use Framework\Config\Config;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Response\Response;
 use Framework\Exception\RouteNotFoundException;
@@ -71,7 +71,7 @@ class Routing
     protected function initDispatcher()
     {
         $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-            $routes = [new Route('GET', '/', Homepage::class)];
+            $routes = Config::get('routing');
             foreach ($routes as $route) {
                 $r->addRoute(
                     $route->getMethod(),
