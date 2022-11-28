@@ -4,7 +4,11 @@ namespace Framework\Routing;
 
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use App\Controller\Homepage;
 use Psr\Http\Message\ServerRequestInterface;
+use Framework\Response\Response;
+use Framework\Exception\RouteNotFoundException;
+use Framework\Exception\RoutingMethodNotAllowed;
 
 use function FastRoute\simpleDispatcher;
 
@@ -38,16 +42,28 @@ class Routing
         $routeInfo = $this->dispatcher->dispatch($httpMethod, $uri);
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
-                echo '404 Not Found';
+                throw new RouteNotFoundException(
+                    sprintf('No controller found for uri %s', $uri)
+                );
                 break;
             case Dispatcher::METHOD_NOT_ALLOWED:
-                $allowedMethods = $routeInfo[1];
-                echo '405 Method Not Allowed';
+                throw new RoutingMethodNotAllowed(
+                    sprintf(
+                        'Method %s is not allowed for uri %s',
+                        $httpMethod,
+                        $uri
+                    )
+                );
                 break;
             case Dispatcher::FOUND:
-                $handler = $routeInfo[1];
+                $controller = $routeInfo[1];
                 $vars = $routeInfo[2];
-                // ... call $handler with $vars
+
+                if (class_exists($controller)) {
+                    return Response::buildWithController($controller, $vars);
+                }
+                echo 'error';
+                die();
                 break;
         }
     }
@@ -55,11 +71,7 @@ class Routing
     protected function initDispatcher()
     {
         $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-            $routes = new Route(
-                'GET',
-                '/',
-                '../../App/Controller/Homepage.php'
-            );
+            $routes = [new Route('GET', '/', Homepage::class)];
             foreach ($routes as $route) {
                 $r->addRoute(
                     $route->getMethod(),

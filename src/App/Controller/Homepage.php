@@ -1,3 +1,11 @@
 <?php
+namespace App\Controller;
+use Framework\Response\Response;
 
-echo 'Hello World';
+class Homepage
+{
+    public function __invoke()
+    {
+        return new Response('home.html.twig');
+    }
+}

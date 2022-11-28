@@ -1,13 +1,12 @@
 <?php
 
+use Framework\Kernel\Kernel;
 use Framework\Request\Request;
-use Framework\Routing;
+use Framework\Templating\Twig;
 
 require '../vendor/autoload.php';
 
-//call the routing class
+$kernel = new Kernel(new Twig());
+$response = $kernel->handleRequest(Request::fromGlobals());
 
-//call the request class
-$request = Request::fromGlobals();
-//call the route method
-Routing\Routing::init()->route($request);
+$kernel->display($response);
