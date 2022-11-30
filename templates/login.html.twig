@@ -3,9 +3,9 @@
 {% block title %}login{% endblock %}
 
 {% block body %}
-   <form method="post" action="login.php">
-       <input type="text" name="nom" placeholder="Nom">
-       <input type="text" name="prenom" placeholder="Prénom">
+   <form method="post" action="login">
+       <input type="text" name="username" placeholder="username">
+       <input type="text" name="password" placeholder="password">
        <input type="submit" value="Envoyer">
     </form>
 {% endblock %}
