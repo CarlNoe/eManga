@@ -5,13 +5,13 @@ namespace Framework\Routing;
 class Route
 {
     public function __construct(
-        protected string $method,
+        protected string|array $method,
         protected string $url,
         protected string $controller
     ) {
     }
 
-    public function getMethod(): string
+    public function getMethod(): string|array
     {
         return $this->method;
     }
