@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}login{% endblock %}
+{% block title %}login
+{% endblock %}
 
 {% block body %}
-   <form method="post" action="login.php">
-       <input type="text" name="nom" placeholder="Nom">
-       <input type="text" name="prenom" placeholder="Prénom">
-       <input type="submit" value="Envoyer">
-    </form>
+	<form method="post" action="login.php">
+		<input type="text" name="nom" placeholder="Nom">
+		<input type="text" name="prenom" placeholder="Prénom">
+		<input type="submit" value="Envoyer">
+	</form>
 {% endblock %}
