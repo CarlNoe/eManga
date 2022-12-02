@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}login{% endblock %}
+{% block title %}login
+{% endblock %}
 
 {% block body %}
-   <form method="post" action="login.php">
-       <input type="text" name="nom" placeholder="Nom">
-       <input type="text" name="prenom" placeholder="Prénom">
-       <input type="submit" value="Envoyer">
+{{errors|join(', ') }}
+   <form method="post" action="login">
+       <input type="text" name="email" placeholder="username">
+       <input type="password" name="password" placeholder="password">
+       <input type="checkbox" name="remember_me" value="1">
+       <label for="remember_me">Se souvenir de moi</label>
+       <input type="submit" value="Login">
+       {{sucess}}
     </form>
 {% endblock %}
