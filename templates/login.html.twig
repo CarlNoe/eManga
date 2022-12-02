@@ -3,9 +3,13 @@
 {% block title %}login{% endblock %}
 
 {% block body %}
+{{errors|join(', ') }}
    <form method="post" action="login">
-       <input type="text" name="username" placeholder="username">
-       <input type="text" name="password" placeholder="password">
-       <input type="submit" value="Envoyer">
+       <input type="text" name="email" placeholder="username">
+       <input type="password" name="password" placeholder="password">
+       <input type="checkbox" name="remember_me" value="1">
+       <label for="remember_me">Se souvenir de moi</label>
+       <input type="submit" value="Login">
+       {{sucess}}
     </form>
 {% endblock %}
