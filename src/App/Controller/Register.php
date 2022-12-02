@@ -11,11 +11,12 @@ class Register
 {
     public function __invoke()
     {
+        $errors = [];
         session_start();
         if (isset($_SESSION['user'])) {
             header('Location: /');
         }
-        if (isset($_POST)) {
+        if (isset($_POST) && !empty($_POST)) {
             $ruleRegister = new ruleRegister($_POST);
             $ruleRegister->validate();
             $errors = $ruleRegister->getErrors();
@@ -25,8 +26,8 @@ class Register
                 $userRepository = $em->getRepository(User::class);
                 $userRepository->insertUser($_POST);
             }
-
-            return new Response('register.html.twig', ['errors' => $errors]);
         }
+
+        return new Response('register.html.twig', ['errors' => $errors]);
     }
 }
