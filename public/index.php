@@ -3,6 +3,7 @@
 use Framework\Kernel\Kernel;
 use Framework\Request\Request;
 use Framework\Templating\Twig;
+use Framework\Config\Config;
 
 require '../vendor/autoload.php';
 
