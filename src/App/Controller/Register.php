@@ -25,6 +25,7 @@ class Register
                 $em = EntityManager::getInstance();
                 $userRepository = $em->getRepository(User::class);
                 $userRepository->insertUser($_POST);
+                header('Location: /login');
             }
         }
 
