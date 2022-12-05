@@ -1,6 +1,7 @@
 <?php
 
 namespace App\utils;
+
 use Framework\Doctrine\EntityManager;
 use App\Entity\User;
 
@@ -123,9 +124,13 @@ class ruleRegister
 
     protected function isUniqueEmail(): void
     {
-        $em = EntityManager::getInstance();
-        $userRepository = $em->getRepository(User::class);
-        $user = $userRepository->findOneByEmail($this->data['email']);
-        $user ? ($this->errors['email'] = 'This email is already used') : null;
+        if (!empty($this->data['email'])) {
+            $em = EntityManager::getInstance();
+            $userRepository = $em->getRepository(User::class);
+            $user = $userRepository->findOneByEmail($this->data['email']);
+            $user
+                ? ($this->errors['email'] = 'This email is already used')
+                : null;
+        }
     }
 }
