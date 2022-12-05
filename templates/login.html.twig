@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+
 {{errors|join(', ') }}
    <form method="post" action="login">
        <input type="text" name="email" placeholder="username">
