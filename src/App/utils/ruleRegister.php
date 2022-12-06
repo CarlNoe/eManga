@@ -77,20 +77,20 @@ class ruleRegister
 
     protected function validateFirstname(): void
     {
-        if (empty($this->data['firstname'])) {
-            $this->errors['firstname'] = 'Firstname is required';
-        } elseif (strlen($this->data['firstname']) < 3) {
-            $this->errors['firstname'] =
+        if (empty($this->data['firstName'])) {
+            $this->errors['firstName'] = 'Firstname is required';
+        } elseif (strlen($this->data['firstName']) < 3) {
+            $this->errors['firstName'] =
                 'Firstname must be at least 3 characters';
         }
     }
 
     protected function validateLastname(): void
     {
-        if (empty($this->data['lastname'])) {
-            $this->errors['lastname'] = 'Lastname is required';
-        } elseif (strlen($this->data['lastname']) < 3) {
-            $this->errors['lastname'] =
+        if (empty($this->data['lastName'])) {
+            $this->errors['lastName'] = 'Lastname is required';
+        } elseif (strlen($this->data['lastName']) < 3) {
+            $this->errors['lastName'] =
                 'Lastname must be at least 3 characters';
         }
     }

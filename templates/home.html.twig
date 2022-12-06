@@ -6,4 +6,9 @@
     <a href="login">Se connecter</a>
     <a href="register">S'enregistrer</a>
     <a href="/?disconnect=1">Se déconnecter</a>
+    <a href="manga?id=1">Manga</a>
+
+    {% if role == 'admin' %}
+        <a href="change">Admin</a>
+    {% endif %}
 {% endblock %}

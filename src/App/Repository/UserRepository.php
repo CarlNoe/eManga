@@ -35,16 +35,7 @@ class UserRepository extends EntityRepository
 
     function insertUser(array $data): void
     {
-        $user = new User();
-        $user->setEmail($data['email']);
-        $user->setUsername($data['username']);
-        $user->setFirstName($data['firstname']);
-        $user->setLastName($data['lastname']);
-        $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
-        $user->setRole('user');
-        $user->setCity($data['city']);
-        $user->setPostalCode($data['zipcode']);
-        $user->setAddress($data['address']);
+        $user = new User($data);
 
         $this->_em->persist($user);
         $this->_em->flush();

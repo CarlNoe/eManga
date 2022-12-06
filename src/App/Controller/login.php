@@ -5,14 +5,16 @@ namespace App\Controller;
 use App\Entity\User;
 use Framework\Response\Response;
 use Framework\Doctrine\EntityManager;
+use App\utils\Session;
 
 class login
 {
     public function __invoke()
     {
-        session_start();
+        $se = Session::getInstance();
+        $se->start();
         $errors = [];
-        if (isset($_SESSION['user'])) {
+        if ($se->has('user')) {
             header('Location: /');
         }
         if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -26,7 +28,6 @@ class login
                 $errors = 'Email ou mot de passe incorrect';
             } else {
                 if ($_POST['remember_me'] == '1') {
-                    session_start();
                     $_SESSION['user'] = $user;
                 }
                 header('Location: /');

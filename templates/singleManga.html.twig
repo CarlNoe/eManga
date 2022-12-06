@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Single Manga{% endblock %}
+
+{% block body %}
+
+    {{ manga.title }}<br>
+    {{ manga.description }}<br>
+    {{ manga.price }} Prix<br>
+    {{ manga.stock }} Stock<br>
+    <img src='{{ manga.image }}'><br>
+
+    {% for categorie in categories %}
+        {{categorie.name}}
+    {% endfor %}
+    {% if role == 'admin' %}
+        {#bouton modifier#}
+
+        {#bouton supprimer#}
+        <a href='manga?id={{manga.id}}&delete=true'>Supprimer</a>
+    {% endif %}
+
+{% endblock %}

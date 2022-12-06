@@ -1,9 +1,10 @@
 <?php
 
+use App\Controller\AllManga;
 use App\Controller\Homepage;
 use App\Controller\login;
 use App\Controller\Register;
-
+use App\Controller\SingleManga;
 use Framework\Routing\Route;
 
 return [
@@ -11,5 +12,7 @@ return [
         new Route('GET', '/', Homepage::class),
         new Route(['GET', 'POST'], '/login', login::class),
         new Route(['GET', 'POST'], '/register', Register::class),
+        new Route(['GET', 'POST'], '/manga', SingleManga::class),
+        new Route('GET', '/allmanga', AllManga::class),
     ],
 ];

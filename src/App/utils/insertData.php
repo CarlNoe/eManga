@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Framework\Doctrine\EntityManager;
 
 require '../../../vendor/autoload.php';
-$api_url = 'https://kitsu.io/api/edge/manga?page[limit]=15&page[offset]=10';
+$api_url = 'https://kitsu.io/api/edge/manga?page[limit]=20&page[offset]=0';
 
 $data = getDataFromApi($api_url);
 
@@ -38,7 +38,7 @@ function insertMangaFromApi(object $manga, EntityManagerInterface $em): Manga
     $newManga = new Manga();
     $newManga->setTitle($manga->attributes->canonicalTitle);
     $newManga->setDescription($manga->attributes->description);
-    $newManga->setImage($manga->attributes->posterImage->original);
+    $newManga->setImage($manga->attributes->posterImage->small);
     $newManga->setPrice(rand(1, 15));
     $newManga->setStock(rand(1, 50));
 

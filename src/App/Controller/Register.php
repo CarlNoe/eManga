@@ -6,13 +6,15 @@ use Framework\Response\Response;
 use App\Entity\User;
 use Framework\Doctrine\EntityManager;
 use App\Utils\ruleRegister;
+use App\Utils\Session;
 
 class Register
 {
     public function __invoke()
     {
+        $se = Session::getInstance();
+        $se->start();
         $errors = [];
-        session_start();
         if (isset($_SESSION['user'])) {
             header('Location: /');
         }
