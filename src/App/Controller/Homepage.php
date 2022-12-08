@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Framework\Response\Response;
 use App\utils\Session;
-use App\Entity\User;
 
 class Homepage
 {

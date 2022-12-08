@@ -33,4 +33,43 @@ class CategoriesRepository extends EntityRepository
         $this->_em->persist($categorie);
         $this->_em->flush();
     }
+
+    function deleteCategorie(string $data): void
+    {
+        $categorie = $this->findOneByTitle($data);
+
+        $this->_em->remove($categorie);
+        $this->_em->flush();
+    }
+
+    function deleteCategorieObject(Categories $categorie): void
+    {
+        $this->_em->remove($categorie);
+        $this->_em->flush();
+    }
+
+    function updateCategorie(string $oldName, string $newName): void
+    {
+        $categorie = $this->findOneByTitle($oldName);
+        $categorie->setName($newName);
+
+        $this->_em->persist($categorie);
+        $this->_em->flush();
+    }
+
+    function updateCategorieObject(Categories $categorie, string $newName): void
+    {
+        $categorie->setName($newName);
+
+        $this->_em->persist($categorie);
+        $this->_em->flush();
+    }
+
+    function findAll()
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder->select('m')->from(Categories::class, 'm');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

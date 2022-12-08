@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Categories;
+use App\Entity\categories;
 use App\Entity\Manga;
 use Doctrine\ORM\EntityRepository;
 
@@ -44,19 +44,19 @@ class MangaRepository extends EntityRepository
         return $this->find($id);
     }
 
-    function findCategories(int $id)
+    function findcategories(int $id)
     {
         $query = $this->_em
             ->createQuery(
                 'SELECT c.name
-            FROM App\Entity\Categories c
-            JOIN App\Entity\CategoriesManga cm
+            FROM App\Entity\categories c
+            JOIN App\Entity\categoriesManga cm
             WITH c.id = cm.categories
             WHERE cm.manga = :id'
             )
             ->setParameter('id', $id);
 
-        return $query->getResult();
+        return $query->getSingleColumnResult();
     }
 
     function deleteManga(int $int): void

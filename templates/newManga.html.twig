@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Insert New Manga
+{% endblock %}
+
+{% block body %}
+	<form method="post" action="newmanga">
+		<input type="text" name="title" placeholder="Title">
+		<input type="text" name="description" placeholder="description">
+		<input type="text" name="image" placeholder="image">
+		<label for="image">Image à partir d'un lien</label>
+		<input type="text" name="price" placeholder="price">
+		<input type="text" name="stock" placeholder="stock">
+        <br>
+		<label for="categorie">Categorie :</label>
+			{% for categorie in allCategories %}
+				<input type="checkbox" name="categories[]" value="{{ categorie.id }}">{{ categorie.name }}
+			{% endfor %}
+        <br>
+            <label for="insertCategorie">Ajouter une categorie :</label>
+            <input type="text" name="categories[newCategorie]" placeholder="insertCategorie">
+			<input type="submit" value="Insert">
+		</form>
+	{% endblock %}

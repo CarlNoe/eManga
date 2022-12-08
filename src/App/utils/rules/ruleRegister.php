@@ -1,6 +1,6 @@
 <?php
 
-namespace App\utils;
+namespace App\utils\rules;
 
 use Framework\Doctrine\EntityManager;
 use App\Entity\User;

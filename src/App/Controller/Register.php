@@ -5,7 +5,7 @@ namespace App\Controller;
 use Framework\Response\Response;
 use App\Entity\User;
 use Framework\Doctrine\EntityManager;
-use App\Utils\ruleRegister;
+use App\Utils\rules\ruleRegister;
 use App\Utils\Session;
 
 class Register

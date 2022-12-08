@@ -1,22 +1,27 @@
 {% extends 'base.html.twig' %}
-{% block title %}All Manga{% endblock %}
+{% block title %}All Manga
+{% endblock %}
 
 {% block body %}
 	<h1>All Manga</h1>
 
 	{% for manga in mangas %}
+		<img src='{{ manga.image }}'><br>
 		{{ manga.title }}<br>
 		{{ manga.description }}<br>
-		{{ manga.price }} Prix<br>
-		<img src='{{ manga.image }}'><br>
+		{{ manga.price }}
+		Prix<br>
 
-		{% for categorie in categories %}
-			{{categorie.name}}
+		{% for categorie in categories[manga.title] %}
+			{{categorie}}
 		{% endfor %}
 
-        <a href='manga?id={{manga.id}}'>Détails</a>
-        <br>
+		<a href='manga?id={{manga.id}}'>Détails</a>
+		<br>
+		<br>
+		<br>
+		<br>
 	{% endfor %}
-	
+
 
 {% endblock %}

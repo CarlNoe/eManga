@@ -12,10 +12,16 @@ require '../../../vendor/autoload.php';
 $api_url = 'https://kitsu.io/api/edge/manga?page[limit]=20&page[offset]=0';
 
 $data = getDataFromApi($api_url);
+$nextData = getNextDataFromApi($api_url);
 
 $entityManager = EntityManager::getInstance();
 
-insertAllDataFromApi($data, $entityManager);
+for ($i = 0; $i < 10; $i++) {
+    insertAllDataFromApi($data, $entityManager);
+    $api_url = getNextDataFromApi($nextData);
+    $data = getDataFromApi($api_url);
+    $nextData = getNextDataFromApi($api_url);
+}
 
 function insertAllDataFromApi($data, $entityManager)
 {
@@ -77,7 +83,7 @@ function insertMangaCategoriesFromApi(
     $categoriesMangaRepository->insertMangaCategoriesObject($categorie, $manga);
 }
 
-function getDataFromApi(string $api_url): array
+function getDataFromApi(string $api_url)
 {
     $json_data = file_get_contents($api_url);
 
@@ -88,7 +94,7 @@ function getDataFromApi(string $api_url): array
     return $data;
 }
 
-function getNextDataFromApi(string $api_url): string
+function getNextDataFromApi(string $api_url)
 {
     $json_data = file_get_contents($api_url);
 

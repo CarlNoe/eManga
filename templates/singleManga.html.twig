@@ -10,7 +10,7 @@
     <img src='{{ manga.image }}'><br>
 
     {% for categorie in categories %}
-        {{categorie.name}}
+        {{categorie}}
     {% endfor %}
     {% if role == 'admin' %}
         {#bouton modifier#}

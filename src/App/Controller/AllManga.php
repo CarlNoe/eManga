@@ -10,9 +10,19 @@ class AllManga
 {
     public function __invoke()
     {
+        $categories = [];
         $em = EntityManager::getInstance();
         $mangaRepository = $em->getRepository(Manga::class);
         $mangas = $mangaRepository->find10Manga();
-        return new Response('allManga.html.twig', ['mangas' => $mangas]);
+
+        foreach ($mangas as $manga) {
+            $categories[$manga->getTitle()] = $mangaRepository->findCategories(
+                $manga->getId()
+            );
+        }
+        return new Response(
+            'allManga.html.twig',
+            ['mangas' => $mangas] + ['categories' => $categories]
+        );
     }
 }

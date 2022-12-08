@@ -6,7 +6,7 @@ use Framework\Response\Response;
 use Framework\Doctrine\EntityManager;
 use App\Entity\Manga;
 use App\utils\Session;
-use App\Entity\CategoriesManga;
+use App\Entity\CategorieManga;
 
 class SingleManga
 {
@@ -14,28 +14,25 @@ class SingleManga
     {
         $se = Session::getInstance();
         $se->start();
+        $em = EntityManager::getInstance();
+        $mangaRepository = $em->getRepository(Manga::class);
         $role = ' ';
         if ($se->has('user')) {
             $role = $se->get('user')->getRole();
         }
 
         if (isset($_GET['delete']) && $role == 'admin') {
-            $em = EntityManager::getInstance();
-
-            $categoriesMangaRepository = $em->getRepository(
-                CategoriesManga::class
+            $em->getRepository(CategoriesManga::class)->deleteMangaCategories(
+                $_GET['id']
             );
-            $categoriesMangaRepository->deleteMangaCategories($_GET['id']);
-            $mangaRepository = $em->getRepository(Manga::class);
             $mangaRepository->deleteManga($_GET['id']);
 
             header('Location: /');
         }
 
-        $em = EntityManager::getInstance();
-        $mangaRepository = $em->getRepository(Manga::class);
         $manga = $mangaRepository->findOneById($_GET['id']);
         $categories = $mangaRepository->findCategories($manga->getId());
+
         return new Response(
             'singleManga.html.twig',
             ['manga' => $manga] + ['categories' => $categories] + [

@@ -21,8 +21,8 @@ class login
             $em = EntityManager::getInstance();
             $userRepository = $em->getRepository(User::class);
             $user = $userRepository->getUser(
-                htmlspecialchars($_POST['email']),
-                htmlspecialchars($_POST['password'])
+                strip_tags(htmlspecialchars($_POST['email'])),
+                strip_tags(htmlspecialchars($_POST['password']))
             );
             if ($user == null) {
                 $errors = 'Email ou mot de passe incorrect';
