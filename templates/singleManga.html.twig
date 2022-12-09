@@ -1,22 +1,43 @@
 {% extends 'base.html.twig' %}
-{% block title %}Single Manga{% endblock %}
+{% block title %}Single Manga
+{% endblock %}
 
 {% block body %}
 
-    {{ manga.title }}<br>
-    {{ manga.description }}<br>
-    {{ manga.price }} Prix<br>
-    {{ manga.stock }} Stock<br>
-    <img src='{{ manga.image }}'><br>
+	{{ manga.title }}<br>
+	{{ manga.description }}<br>
+	{{ manga.price }}
+	Prix<br>
+	{{ manga.stock }}
+	Stock<br>
+	<img src='{{ manga.image }}'><br>
 
-    {% for categorie in categories %}
-        {{categorie}}
-    {% endfor %}
-    {% if role == 'admin' %}
-        {#bouton modifier#}
+	{% for categorie in categories %}
+		{{categorie}}
+	{% endfor %}
+	<br>
+	{% if role == 'admin' %}
+		{#bouton modifier#}
 
-        {#bouton supprimer#}
-        <a href='manga?id={{manga.id}}&delete=true'>Supprimer</a>
-    {% endif %}
+		{#bouton supprimer#}
+			<a href='manga?id={{manga.id}}&delete=true'> Supprimer</a>
+	{% endif %}
 
+	<form action='manga' method='POST'>
+		<input type='text' name='title' value='{{manga.title}}'>
+		<input type='text' name='description' value='{{manga.description}}'>
+		<input type='text' name='price' value='{{manga.price}}'>
+		<input type='text' name='stock' value='{{manga.stock}}'>
+		<input type='text' name='image' value='{{manga.image}}'>
+		<br>
+		{% for categorie in allCategories %}
+			{% if categorie.name in categories %}
+				<input type="checkbox" name="categories[]" value="{{ categorie.id }}" checked>{{ categorie.name }}
+			{% else %}
+				<input type="checkbox" name="categories[]" value="{{ categorie.id }}">{{ categorie.name }}
+			{% endif %}
+		{% endfor %}
+		<br>
+		<input type='submit' value='change'>
+	</form>
 {% endblock %}

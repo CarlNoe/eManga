@@ -41,14 +41,16 @@ function insertMangaFromApi(object $manga, EntityManagerInterface $em): Manga
 {
     $MangaRepository = $em->getRepository(Manga::class);
 
-    $newManga = new Manga();
-    $newManga->setTitle($manga->attributes->canonicalTitle);
-    $newManga->setDescription($manga->attributes->description);
-    $newManga->setImage($manga->attributes->posterImage->small);
-    $newManga->setPrice(rand(1, 15));
-    $newManga->setStock(rand(1, 50));
+    $parametersManga = [
+        'title' => $manga->attributes->canonicalTitle,
+        'description' => $manga->attributes->description,
+        'image' => $manga->attributes->posterImage->small,
+        'price' => rand(1, 15),
+        'stock' => rand(1, 50),
+    ];
+    $newManga = new Manga($parametersManga);
 
-    $MangaRepository->insertMangaObject($newManga);
+    $MangaRepository->insertManga($newManga);
 
     return $newManga;
 }
@@ -59,13 +61,12 @@ function insertCategorieFromApi(
 ): Categories {
     $categorieRepository = $em->getRepository(Categories::class);
 
-    $categorie = new Categories();
-    $categorie->setName($categories->attributes->title);
+    $categorie = new Categories($categories->attributes->title);
     if (
         $categorieRepository->findOneByTitle($categories->attributes->title) ===
         null
     ) {
-        $categorieRepository->insertCategorieObject($categorie);
+        $categorieRepository->insertCategorie($categorie);
     } else {
         $categorie = $categorieRepository->findOneByTitle(
             $categories->attributes->title

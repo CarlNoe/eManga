@@ -19,47 +19,36 @@ class CategoriesRepository extends EntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
-    function insertCategorie(string $data): void
+    function insertCategorie(string|Categories $categorie): void
     {
-        $categorie = new Categories();
-        $categorie->setName($data);
+        if (is_string($categorie)) {
+            $categorie = new Categories($categorie);
+        }
 
         $this->_em->persist($categorie);
         $this->_em->flush();
     }
 
-    function insertCategorieObject(Categories $categorie): void
+    function deleteCategorie(string|Categories $data): void
     {
-        $this->_em->persist($categorie);
-        $this->_em->flush();
-    }
-
-    function deleteCategorie(string $data): void
-    {
-        $categorie = $this->findOneByTitle($data);
+        if (is_string($data)) {
+            $categorie = $this->findOneByTitle($data);
+        }
 
         $this->_em->remove($categorie);
         $this->_em->flush();
     }
 
-    function deleteCategorieObject(Categories $categorie): void
-    {
-        $this->_em->remove($categorie);
-        $this->_em->flush();
-    }
-
-    function updateCategorie(string $oldName, string $newName): void
-    {
-        $categorie = $this->findOneByTitle($oldName);
-        $categorie->setName($newName);
-
-        $this->_em->persist($categorie);
-        $this->_em->flush();
-    }
-
-    function updateCategorieObject(Categories $categorie, string $newName): void
-    {
-        $categorie->setName($newName);
+    function updateCategorie(
+        string|Categories $oldCategorie,
+        string|Categories $newCategorie
+    ): void {
+        if (is_string($oldCategorie)) {
+            $categorie = $this->findOneByTitle($oldCategorie);
+        }
+        if (is_string($newCategorie)) {
+            $categorie->setName($newCategorie);
+        }
 
         $this->_em->persist($categorie);
         $this->_em->flush();
@@ -71,5 +60,17 @@ class CategoriesRepository extends EntityRepository
         $queryBuilder->select('m')->from(Categories::class, 'm');
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    function insertManyCategories(array $categories): void
+    {
+        foreach ($categories as $categorie) {
+            $this->insertCategorie($categorie);
+        }
+    }
+
+    function findOneById(int $id)
+    {
+        return $this->find($id);
     }
 }

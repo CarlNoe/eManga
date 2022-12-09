@@ -11,8 +11,7 @@ class AllManga
     public function __invoke()
     {
         $categories = [];
-        $em = EntityManager::getInstance();
-        $mangaRepository = $em->getRepository(Manga::class);
+        $mangaRepository = EntityManager::getRepository(Manga::class);
         $mangas = $mangaRepository->find10Manga();
 
         foreach ($mangas as $manga) {

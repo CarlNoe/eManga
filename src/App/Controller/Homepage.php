@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Framework\Response\Response;
-use App\utils\Session;
+use Framework\HttpMethode\Session;
 
 class Homepage
 {

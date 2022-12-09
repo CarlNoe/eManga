@@ -6,7 +6,7 @@ use Framework\Response\Response;
 use App\Entity\User;
 use Framework\Doctrine\EntityManager;
 use App\Utils\rules\ruleRegister;
-use App\Utils\Session;
+use Framework\HttpMethode\Session;
 
 class Register
 {
@@ -19,15 +19,12 @@ class Register
             header('Location: /');
         }
         if (isset($_POST) && !empty($_POST)) {
-            $ruleRegister = new ruleRegister($_POST);
-            $ruleRegister->validate();
-            $errors = $ruleRegister->getErrors();
-
+            $ruleRegister = new ruleRegister();
+            $errors = $ruleRegister->isValidateRegister($_POST);
+            var_dump($errors);
             if (empty($errors)) {
-                $em = EntityManager::getInstance();
-                $userRepository = $em->getRepository(User::class);
+                $userRepository = EntityManager::getRepository(User::class);
                 $userRepository->insertUser($_POST);
-                header('Location: /login');
             }
         }
 

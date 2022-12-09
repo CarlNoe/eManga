@@ -4,133 +4,138 @@ namespace App\utils\rules;
 
 use Framework\Doctrine\EntityManager;
 use App\Entity\User;
+use Framework\Rules\Rules;
 
 class ruleRegister
 {
-    protected array $errors = [];
-    protected array $data = [];
-
-    public function __construct(array $data)
+    public function __construct()
     {
-        $this->data = $data;
-        $this->errors = [];
+        $this->rules = [
+            'username' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 20,
+                    ],
+                ],
+            ],
+            'password' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 100,
+                    ],
+                ],
+            ],
+            'password_confirm' => [
+                [
+                    'rule' => 'sameAs',
+                    'args' => [
+                        'field' => 'password',
+                        'errorMessage' => 'The password had to be the same !',
+                    ],
+                ],
+            ],
+            'firstName' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 100,
+                    ],
+                ],
+            ],
+            'lastName' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 100,
+                    ],
+                ],
+            ],
+            'email' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 100,
+                    ],
+                ],
+                [
+                    'rule' => 'uniq',
+                    'args' => [
+                        'callFunction' => 'isUniqEmail',
+                        'object' => $this,
+                        'errorMessage' => 'this email is already used',
+                    ],
+                ],
+            ],
+            'address' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 255,
+                    ],
+                ],
+            ],
+            'city' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 255,
+                    ],
+                ],
+            ],
+            'zipcode' => [
+                [
+                    'rule' => 'required',
+                ],
+
+                [
+                    'rule' => 'length',
+                    'args' => [
+                        'max' => 5,
+                    ],
+                ],
+            ],
+        ];
     }
 
-    public function validate(): void
+    public function isValidateRegister($data)
     {
-        $this->validateEmail();
-        $this->validatePassword();
-        $this->validatePasswordConfirm();
-        $this->validateUsername();
-        $this->validateFirstname();
-        $this->validateLastname();
-        $this->validateCity();
-        $this->validateZipcode();
-        $this->validateAddress();
-        $this->isUniqueEmail();
+        $ru = new Rules($this->rules);
+
+        return $ru->validate($data);
     }
 
-    public function getErrors(): array
+    public function isUniqEmail($data)
     {
-        return $this->errors;
-    }
-
-    protected function validateEmail(): void
-    {
-        if (empty($this->data['email'])) {
-            $this->errors['email'] = 'Email is required';
-        } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->errors['email'] = 'Email is not valid';
-        }
-    }
-
-    protected function validatePassword(): void
-    {
-        if (empty($this->data['password'])) {
-            $this->errors['password'] = 'Password is required';
-        } elseif (strlen($this->data['password']) < 8) {
-            $this->errors['password'] =
-                'Password must be at least 8 characters';
-        }
-    }
-
-    protected function validatePasswordConfirm(): void
-    {
-        if (empty($this->data['password_confirm'])) {
-            $this->errors['password_confirm'] =
-                'Password confirmation is required';
-        } elseif ($this->data['password'] !== $this->data['password_confirm']) {
-            $this->errors['password_confirm'] =
-                'Password confirmation must be the same as password';
-        }
-    }
-
-    protected function validateUsername(): void
-    {
-        if (empty($this->data['username'])) {
-            $this->errors['username'] = 'Username is required';
-        } elseif (strlen($this->data['username']) < 3) {
-            $this->errors['username'] =
-                'Username must be at least 3 characters';
-        }
-    }
-
-    protected function validateFirstname(): void
-    {
-        if (empty($this->data['firstName'])) {
-            $this->errors['firstName'] = 'Firstname is required';
-        } elseif (strlen($this->data['firstName']) < 3) {
-            $this->errors['firstName'] =
-                'Firstname must be at least 3 characters';
-        }
-    }
-
-    protected function validateLastname(): void
-    {
-        if (empty($this->data['lastName'])) {
-            $this->errors['lastName'] = 'Lastname is required';
-        } elseif (strlen($this->data['lastName']) < 3) {
-            $this->errors['lastName'] =
-                'Lastname must be at least 3 characters';
-        }
-    }
-
-    protected function validateCity(): void
-    {
-        if (empty($this->data['city'])) {
-            $this->errors['city'] = 'City is required';
-        } elseif (strlen($this->data['city']) < 3) {
-            $this->errors['city'] = 'City must be at least 3 characters';
-        }
-    }
-
-    protected function validateZipcode(): void
-    {
-        if (empty($this->data['zipcode'])) {
-            $this->errors['zipcode'] = 'Zipcode is required';
-        } elseif (strlen($this->data['zipcode']) < 3) {
-            $this->errors['zipcode'] = 'Zipcode must be at least 3 characters';
-        }
-    }
-
-    protected function validateAddress(): void
-    {
-        if (empty($this->data['address'])) {
-            $this->errors['address'] = 'Address is required';
-        } elseif (strlen($this->data['address']) < 3) {
-            $this->errors['address'] = 'Address must be at least 3 characters';
-        }
-    }
-
-    protected function isUniqueEmail(): void
-    {
-        if (!empty($this->data['email'])) {
-            $em = EntityManager::getInstance();
-            $userRepository = $em->getRepository(User::class);
-            $user = $userRepository->findOneByEmail($this->data['email']);
-            $user
-                ? ($this->errors['email'] = 'This email is already used')
-                : null;
-        }
+        return EntityManager::getRepository(User::class)->isUniqEmail($data);
     }
 }

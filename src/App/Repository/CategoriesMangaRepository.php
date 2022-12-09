@@ -34,10 +34,32 @@ class CategoriesMangaRepository extends EntityRepository
         $query = $this->_em
             ->createQuery(
                 'DELETE FROM App\Entity\CategoriesManga cm
-            WHERE cm.manga = :id'
+                WHERE cm.manga = :id'
             )
             ->setParameter('id', $id);
 
         $query->getResult();
+    }
+
+    function insertMangaCategories(array $categories, Manga $manga): void
+    {
+        foreach ($categories as $categorie) {
+            if (is_numeric($categorie)) {
+                $categorie = $this->_em
+                    ->getRepository(Categories::class)
+                    ->findOneById($categorie);
+            } elseif (is_string($categorie)) {
+                $categorie = $this->_em
+                    ->getRepository(Categories::class)
+                    ->findOneByTitle($categorie);
+            }
+            $this->insertMangaCategoriesObject($categorie, $manga);
+        }
+    }
+
+    function updateMangaCategories(array $categories, Manga $manga): void
+    {
+        $this->deleteMangaCategories($manga->getId());
+        $this->insertMangaCategories($categories, $manga);
     }
 }

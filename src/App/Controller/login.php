@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Framework\Response\Response;
 use Framework\Doctrine\EntityManager;
-use App\utils\Session;
+use Framework\HttpMethode\Session;
 
 class login
 {
@@ -18,8 +18,7 @@ class login
             header('Location: /');
         }
         if (isset($_POST['email']) && isset($_POST['password'])) {
-            $em = EntityManager::getInstance();
-            $userRepository = $em->getRepository(User::class);
+            $userRepository = EntityManager::getRepository(User::class);
             $user = $userRepository->getUser(
                 strip_tags(htmlspecialchars($_POST['email'])),
                 strip_tags(htmlspecialchars($_POST['password']))
