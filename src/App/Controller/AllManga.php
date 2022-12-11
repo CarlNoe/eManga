@@ -12,7 +12,6 @@ class AllManga
     {
         $categories = [];
         $mangaRepository = EntityManager::getRepository(Manga::class);
-        var_dump(intval($_GET['page']));
         $mangas = $mangaRepository->find10Manga($_GET['page']);
 
         foreach ($mangas as $manga) {
