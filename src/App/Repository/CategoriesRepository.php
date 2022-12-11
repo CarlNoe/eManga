@@ -19,18 +19,58 @@ class CategoriesRepository extends EntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
-    function insertCategorie(string $data): void
+    function insertCategorie(string|Categories $categorie): void
     {
-        $categorie = new Categories();
-        $categorie->setName($data);
+        if (is_string($categorie)) {
+            $categorie = new Categories($categorie);
+        }
 
         $this->_em->persist($categorie);
         $this->_em->flush();
     }
 
-    function insertCategorieObject(Categories $categorie): void
+    function deleteCategorie(string|Categories $data): void
     {
+        if (is_string($data)) {
+            $categorie = $this->findOneByTitle($data);
+        }
+
+        $this->_em->remove($categorie);
+        $this->_em->flush();
+    }
+
+    function updateCategorie(
+        string|Categories $oldCategorie,
+        string|Categories $newCategorie
+    ): void {
+        if (is_string($oldCategorie)) {
+            $categorie = $this->findOneByTitle($oldCategorie);
+        }
+        if (is_string($newCategorie)) {
+            $categorie->setName($newCategorie);
+        }
+
         $this->_em->persist($categorie);
         $this->_em->flush();
+    }
+
+    function findAll()
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder->select('m')->from(Categories::class, 'm');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    function insertManyCategories(array $categories): void
+    {
+        foreach ($categories as $categorie) {
+            $this->insertCategorie($categorie);
+        }
+    }
+
+    function findOneById(int $id)
+    {
+        return $this->find($id);
     }
 }

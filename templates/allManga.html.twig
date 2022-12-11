@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}All Manga
+{% endblock %}
+
+{% block body %}
+	<h1>All Manga</h1>
+
+	{% for manga in mangas %}
+		<img src='{{ manga.image }}'><br>
+		{{ manga.title }}<br>
+		{{ manga.description }}<br>
+		{{ manga.price }}
+		Prix<br>
+
+		{% for categorie in categories[manga.title] %}
+			{{categorie}}
+		{% endfor %}
+
+		<a href='manga?id={{manga.id}}'>Détails</a>
+		<br>
+		<br>
+		<br>
+		<br>
+	{% endfor %}
+{# pagination #}
+	{% if page > 1 %}
+		<a href='allmanga?page={{page-1}}'>Page précédente</a>
+	{% endif %}
+
+	{% if page < allPages %}
+		<a href='allmanga?page={{page+1}}'>Page suivante</a>
+	{% endif %}
+
+{% endblock %}

@@ -29,6 +29,15 @@ class Manga
     #[ORM\Column(type: 'integer', name: 'stock')]
     protected int $stock;
 
+    public function __construct(array $data = [])
+    {
+        $this->title = $data['title'];
+        $this->description = $data['description'];
+        $this->image = $data['image'];
+        $this->price = $data['price'];
+        $this->stock = $data['stock'];
+    }
+
     public function getId(): int
     {
         return $this->id;
