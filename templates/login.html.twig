@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}login
+{% block title %}
+	Connexion
 {% endblock %}
 
 {% block body %}
-{{errors|join(', ') }}
-   <form method="post" action="login">
-       <input type="text" name="email" placeholder="username">
-       <input type="password" name="password" placeholder="password">
-       <input type="checkbox" name="remember_me" value="1">
-       <label for="remember_me">Se souvenir de moi</label>
-       <input type="submit" value="Login">
-    </form>
+	{{errors|join(', ') }}
+	<form method="post" action="login">
+		<input type="text" name="email" placeholder="username">
+		<input type="password" name="password" placeholder="password">
+		<input type="checkbox" name="remember_me" value="1">
+		<label for="remember_me">Se souvenir de moi</label>
+		<input type="submit" value="Login">
+	</form>
 {% endblock %}
