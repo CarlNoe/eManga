@@ -36,6 +36,7 @@ class SingleManga
         isset($_GET['id']) ? $se->set('id_manga', $_GET['id']) : ' ';
         $manga = $mangaRepository->findOneById($se->get('id_manga'));
         $categories = $mangaRepository->findCategories($manga->getId());
+
         $allCategories = EntityManager::getRepository(
             Categories::class
         )->findAll();

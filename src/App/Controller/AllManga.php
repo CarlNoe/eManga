@@ -12,7 +12,8 @@ class AllManga
     {
         $categories = [];
         $mangaRepository = EntityManager::getRepository(Manga::class);
-        $mangas = $mangaRepository->find10Manga();
+        var_dump(intval($_GET['page']));
+        $mangas = $mangaRepository->find10Manga($_GET['page']);
 
         foreach ($mangas as $manga) {
             $categories[$manga->getTitle()] = $mangaRepository->findCategories(
@@ -21,7 +22,9 @@ class AllManga
         }
         return new Response(
             'allManga.html.twig',
-            ['mangas' => $mangas] + ['categories' => $categories]
+            ['mangas' => $mangas] + ['categories' => $categories] + [
+                    'page' => $_GET['page'],
+                ] + ['allPages' => $mangaRepository->getAllPages()]
         );
     }
 }

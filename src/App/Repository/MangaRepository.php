@@ -65,15 +65,24 @@ class MangaRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    function find10Manga()
+    function find10Manga(int $page)
     {
         $queryBuilder = $this->_em->createQueryBuilder();
         $queryBuilder
             ->select('m')
             ->from(Manga::class, 'm')
+            ->setFirstResult(($page - 1) * 10)
             ->setMaxResults(10);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    function getAllPages()
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder->select('count(m.id)')->from(Manga::class, 'm');
+
+        return ceil($queryBuilder->getQuery()->getSingleScalarResult() / 10);
     }
 
     function updateManga(array $newManga, int $id): void
