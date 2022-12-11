@@ -1,11 +1,203 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-	Mon super site
+
+{% block title %}Accueil
 {% endblock %}
 
 {% block body %}
-	Hello World
-	<a href="login">Se connecter</a>
-	<a href="register">S'enregistrer</a>
-	<a href="/?disconnect=1">Se déconnecter</a>
-{% endblock %}
+	<header>
+		<nav class="flex relative items-center justify-center min-h-[64px]">
+			<img src="/img/logo.png" alt="Logo" class="absolute"/>
+			<ul class="flex items-center w-full justify-end">
+				<li class="flex items-center justify-center">
+					<a href="/login" class="block flex items-center justify-center bg-[#002FD4] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
+						Se connecter
+					</a>
+				</li>
+
+				<li class="flex items-center justify-center">
+					<a href="/register" class="block flex items-center justify-center bg-[#002FD4] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
+						S'enregistrer
+					</a>
+				</li>
+
+				<li class="flex items-center justify-center">
+					<a href="/?disconnect=1" class="block flex items-center justify-center bg-[#002FD4] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
+						Se déconnecter
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="w-full min-h-[468px] bg-cover bg-center" style="background-image: url('/img/bg-header.png');"></div>
+	</header>
+	<main>
+		<section>
+			<h1 class="text-center font-[500] text-xl mt-12 mb-12">TOUS NOS PRODUITS</h1>
+			{# Filters: #}
+			<div class="flex w-full items-center justify-center">
+				<button class="bg-[#002FD4] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">Themes</button>
+				<button class="block flex items-center justify-center bg-[#002FD4] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
+					<img src="/img/arrow-down.svg" alt="" class="m-[4px]"/>
+					<span>Rating</span>
+				</button>
+				<button class="block flex items-center justify-center bg-[#002FD4] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
+					<img src="/img/arrow-down.svg" alt="" class="m-[4px]"/>
+					<span>Price</span>
+				</button>
+			</div>
+			{# Products: #}
+			<div
+				class="flex flex-wrap w-full items-center justify-center">
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+								{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+								{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+				<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
+					<img src="/img/sampleproduct.png" alt="Product" class="w-[200px]"/>
+					<div class="flex flex-col justify-center">
+						<h2 class="text-center font-[600] text-xl">Product name</h2>
+						<span class="text-center text-blue-800">62,10€</span>
+						<div class="flex w-full items-center justify-center">
+							<button class="bg-[#D40000] rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">AJOUT AU PANIER</button>
+						</div>
+					</div>
+				</div>
+				{# sample product #}
+
+			</section>
+			<div class="flex w-full items-center justify-center mt-12 mb-12">
+				<button class="block flex items-center justify-center rounded-lg pl-2 pr-2 pt-1 pb-1 text-white font-semibold ml-[10px]">
+					<img src="/img/firstPageicon.png" alt="" class="m-[4px]"/>
+				</button>
+				<button class="block flex items-center justify-center rounded-lg pl-2 pr-2 pt-1 pb-1 text-white font-semibold mr-[10px]">
+					<img src="/img/previousPageIcon.png" alt="" class="m-[4px]"/>
+				</button>
+				<p class="text-center font-[500] text-xl">1</p>
+				<button class="block flex items-center justify-center rounded-lg pl-2 pr-2 pt-1 pb-1 text-white font-semibold ml-[10px] ">
+					<img src="/img/nextPageicon.png" alt="" class="m-[4px]"/>
+				</button>
+				<button class="block flex items-center justify-center rounded-lg pl-2 pr-2 pt-1 pb-1 text-white font-semibold mr-[10px]">
+					<img src="/img/lastPageicon.png" alt="" class="m-[4px]"/>
+				</button>
+			</div>
+		</main>
+	{% endblock %}
