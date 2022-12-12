@@ -4,7 +4,16 @@
 
 {% block body %}
 	<h1>All Manga</h1>
-
+	<form method='get' action='allmanga'>
+	<input type="hidden" name="page" value="1"/>	
+		<select name="cats" multiple>
+			{% for categorie in allCategories %}
+				<option value="{{categorie.id}}" >{{categorie.name}}</option>
+			{% endfor %}
+		</select>
+		<input type="submit" value="Rechercher">
+	</form>
+	<br>
 	{% for manga in mangas %}
 		<img src='{{ manga.image }}'><br>
 		{{ manga.title }}<br>
@@ -12,8 +21,8 @@
 		{{ manga.price }}
 		Prix<br>
 
-		{% for categorie in categories[manga.title] %}
-			{{categorie}}
+		{% for categorieManga in categoriesManga[manga.title] %}
+			{{categorieManga}}
 		{% endfor %}
 
 		<a href='manga?id={{manga.id}}'>Détails</a>
@@ -22,13 +31,21 @@
 		<br>
 		<br>
 	{% endfor %}
-{# pagination #}
+	{# pagination #}
 	{% if page > 1 %}
-		<a href='allmanga?page={{page-1}}'>Page précédente</a>
+		<a href='allmanga?page={{page-1}}
+		{% if cats is defined %}
+			&cats={{cats|join('&cats=')}}
+		{% endif %}
+		'>Page précédente</a>
 	{% endif %}
 
 	{% if page < allPages %}
-		<a href='allmanga?page={{page+1}}'>Page suivante</a>
+		<a href='allmanga?page={{page+1}}
+		{% if cats is defined %}
+			&cats={{cats|join('&cats=')}}
+		{% endif %}
+		'>Page suivante</a>
 	{% endif %}
 
 {% endblock %}

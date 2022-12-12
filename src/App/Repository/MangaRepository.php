@@ -65,16 +65,25 @@ class MangaRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    function find10Manga(int $page)
+    function find10Manga(int $page, array $categories = [])
     {
-        $queryBuilder = $this->_em->createQueryBuilder();
-        $queryBuilder
-            ->select('m')
-            ->from(Manga::class, 'm')
+        $arrayIsEmpty = count($categories) === 0;
+        $query = $this->_em
+            ->createQuery(
+                'SELECT m
+            FROM App\Entity\Manga m
+            JOIN App\Entity\categoriesManga cm
+            WITH m.id = cm.manga
+            ' . (!$arrayIsEmpty ? 'WHERE cm.categories IN (:categories)' : '')
+            )
             ->setFirstResult(($page - 1) * 10)
             ->setMaxResults(10);
 
-        return $queryBuilder->getQuery()->getResult();
+        if (!$arrayIsEmpty) {
+            $query->setParameter('categories', $categories);
+        }
+
+        return $query->getResult();
     }
 
     function getAllPages()
