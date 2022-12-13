@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
 #[ORM\Table(name: 'categories')]
-class Categories
+class categories
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -33,6 +33,11 @@ class Categories
     }
 
     public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function __construct(string $name)
     {
         $this->name = $name;
     }

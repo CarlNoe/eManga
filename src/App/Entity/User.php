@@ -41,6 +41,19 @@ class User
     #[ORM\Column(type: 'string', length: 255, name: 'postal_code')]
     protected string $postalCode;
 
+    public function __construct(array $data)
+    {
+        $this->username = $data['username'];
+        $this->firstName = $data['firstName'];
+        $this->lastName = $data['lastName'];
+        $this->email = $data['email'];
+        $this->password = password_hash($data['password'], PASSWORD_DEFAULT);
+        $this->role = 'user';
+        $this->address = $data['address'];
+        $this->city = $data['city'];
+        $this->postalCode = $data['zipcode'];
+    }
+
     public function getId(): int
     {
         return $this->id;

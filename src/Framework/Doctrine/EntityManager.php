@@ -27,4 +27,9 @@ class EntityManager
 
         return self::$em;
     }
+
+    public static function getRepository(string $entity): object
+    {
+        return self::getInstance()->getRepository($entity);
+    }
 }

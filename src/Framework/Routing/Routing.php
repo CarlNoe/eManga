@@ -47,13 +47,7 @@ class Routing
                 );
                 break;
             case Dispatcher::METHOD_NOT_ALLOWED:
-                throw new RoutingMethodNotAllowed(
-                    sprintf(
-                        'Method %s is not allowed for uri %s',
-                        $httpMethod,
-                        $uri
-                    )
-                );
+                throw new RoutingMethodNotAllowed();
                 break;
             case Dispatcher::FOUND:
                 $controller = $routeInfo[1];
