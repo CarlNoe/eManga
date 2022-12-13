@@ -16,12 +16,7 @@ $nextData = getNextDataFromApi($api_url);
 
 $entityManager = EntityManager::getInstance();
 
-for ($i = 0; $i < 10; $i++) {
-    insertAllDataFromApi($data, $entityManager);
-    $api_url = getNextDataFromApi($nextData);
-    $data = getDataFromApi($api_url);
-    $nextData = getNextDataFromApi($api_url);
-}
+insertAllDataFromApi($data, $entityManager);
 
 function insertAllDataFromApi($data, $entityManager)
 {
@@ -40,11 +35,16 @@ function insertAllDataFromApi($data, $entityManager)
 function insertMangaFromApi(object $manga, EntityManagerInterface $em): Manga
 {
     $MangaRepository = $em->getRepository(Manga::class);
-
+    $image = $manga->attributes->posterImage;
+    if (!isset($image->small)) {
+        $image = $image->original;
+    } else {
+        $image = $image->small;
+    }
     $parametersManga = [
         'title' => $manga->attributes->canonicalTitle,
         'description' => $manga->attributes->description,
-        'image' => $manga->attributes->posterImage->small,
+        'image' => $image,
         'price' => rand(1, 15),
         'stock' => rand(1, 50),
     ];

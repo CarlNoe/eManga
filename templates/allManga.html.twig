@@ -5,10 +5,10 @@
 {% block body %}
 	<h1>All Manga</h1>
 	<form method='get' action='allmanga'>
-	<input type="hidden" name="page" value="1"/>	
+		<input type="hidden" name="page" value="1"/>
 		<select name="cats" multiple>
 			{% for categorie in allCategories %}
-				<option value="{{categorie.id}}" >{{categorie.name}}</option>
+				<option value="{{categorie.id}}">{{categorie.name}}</option>
 			{% endfor %}
 		</select>
 		<input type="submit" value="Rechercher">
@@ -26,26 +26,24 @@
 		{% endfor %}
 
 		<a href='manga?id={{manga.id}}'>Détails</a>
-		<br>
-		<br>
-		<br>
+		<button  name="addToCart" value="{{manga.id}}">Ajouter au panier</button>
 		<br>
 	{% endfor %}
 	{# pagination #}
 	{% if page > 1 %}
 		<a href='allmanga?page={{page-1}}
-		{% if cats is defined %}
-			&cats={{cats|join('&cats=')}}
-		{% endif %}
+			{% if cats is defined %}
+			{{cats|join(' &cats=')}}
+			{% endif %}
 		'>Page précédente</a>
 	{% endif %}
 
 	{% if page < allPages %}
 		<a href='allmanga?page={{page+1}}
 		{% if cats is defined %}
-			&cats={{cats|join('&cats=')}}
+		{{cats|join(' &cats=')}}
 		{% endif %}
-		'>Page suivante</a>
+	'>Page suivante</a>
 	{% endif %}
 
 {% endblock %}

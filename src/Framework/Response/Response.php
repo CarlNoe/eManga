@@ -18,7 +18,6 @@ class Response
 
         if (!is_callable($controller)) {
             var_dump('You controller is not a valid callable!');
-            die();
         }
 
         return $controller($args);
@@ -32,5 +31,16 @@ class Response
     public function getArgs(): array
     {
         return $this->args;
+    }
+
+    public function getJs(): array
+    {
+        return $this->args['js'] ?? [];
+    }
+
+    public function file(string $file): Response
+    {
+        $this->template = $file;
+        return $this;
     }
 }

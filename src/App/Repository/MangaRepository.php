@@ -67,14 +67,14 @@ class MangaRepository extends EntityRepository
 
     function find10Manga(int $page, array $categories = [])
     {
+        $requestWithCategories = ' JOIN App\Entity\categoriesManga cm
+        WITH m.id = cm.manga WHERE cm.categories IN (:categories)';
         $arrayIsEmpty = count($categories) === 0;
         $query = $this->_em
             ->createQuery(
                 'SELECT m
             FROM App\Entity\Manga m
-            JOIN App\Entity\categoriesManga cm
-            WITH m.id = cm.manga
-            ' . (!$arrayIsEmpty ? 'WHERE cm.categories IN (:categories)' : '')
+            ' . (!$arrayIsEmpty ? $requestWithCategories : '')
             )
             ->setFirstResult(($page - 1) * 10)
             ->setMaxResults(10);

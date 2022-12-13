@@ -6,6 +6,7 @@ use App\Controller\login;
 use App\Controller\Register;
 use App\Controller\SingleManga;
 use App\Controller\NewManga;
+use App\Controller\Cart;
 use Framework\Routing\Route;
 
 return [
@@ -16,5 +17,6 @@ return [
         new Route(['GET', 'POST'], '/manga', SingleManga::class),
         new Route('GET', '/allmanga', AllManga::class),
         new Route(['GET', 'POST'], '/newmanga', NewManga::class),
+        new Route('GET', '/cart', Cart::class),
     ],
 ];

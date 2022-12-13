@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'title.home' }}
+{% endblock %}
+
+{% block body %}
+
+	{% for manga in mangas %}
+		<img src='{{ manga.image }}'><br>
+		{{ manga.title }}<br>
+		{{ manga.description }}<br>
+		{{ manga.price }}Prix<br>
+        {{ manga.stock }}quantité<br>
+	{% endfor %}
+
+    {{total}}
+{% endblock %}

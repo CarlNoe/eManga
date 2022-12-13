@@ -15,6 +15,14 @@
 	{% for categorie in categories %}
 		{{categorie}}
 	{% endfor %}
+	<button value='{{manga.id}}' name='addToCart'>Ajouter au panier</button>
+
+	{#Ne pas toucher à l'id du select#}
+	<select name='quantity' id='quantity'>
+		{% for i in 1..manga.stock %}
+			<option value='{{i}}'>{{i}}</option>
+		{% endfor %}
+	</select>
 	<br>
 	{% if role == 'admin' %}
 		{#bouton modifier#}

@@ -11,6 +11,9 @@ class AllManga
 {
     public function __invoke()
     {
+        if (!isset($_GET['page'])) {
+            $_GET['page'] = 1;
+        }
         $categoriesManga = [];
         $allCategories = EntityManager::getRepository(
             categories::class
@@ -24,20 +27,21 @@ class AllManga
         } else {
             $mangas = $mangaRepository->find10Manga($_GET['page']);
         }
-
         foreach ($mangas as $manga) {
             $categoriesManga[
                 $manga->getTitle()
             ] = $mangaRepository->findCategories($manga->getId());
         }
-        return new Response(
-            'allManga.html.twig',
-            ['mangas' => $mangas] + ['categoriesManga' => $categoriesManga] + [
-                    'page' => $_GET['page'],
-                ] + ['allPages' => $mangaRepository->getAllPages()] + [
-                    'allCategories' => $allCategories,
-                ] + ['cats' => $this->GetUrlIntoArray()]
-        );
+
+        return new Response('allManga.html.twig', [
+            'mangas' => $mangas,
+            'categoriesManga' => $categoriesManga,
+            'page' => $_GET['page'],
+            'allPages' => $mangaRepository->getAllPages(),
+            'allCategories' => $allCategories,
+            'cats' => $this->GetUrlIntoArray(),
+            'js' => ['addManga.js'],
+        ]);
     }
 
     public function GetUrlIntoArray()

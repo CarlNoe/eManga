@@ -12,14 +12,14 @@
 		<label for="image">Image à partir d'un lien</label>
 		<input type="text" name="price" placeholder="price">
 		<input type="text" name="stock" placeholder="stock">
-        <br>
+		<br>
 		<label for="categorie">Categorie :</label>
-			{% for categorie in allCategories %}
-				<input type="checkbox" name="categories[]" value="{{ categorie.id }}">{{ categorie.name }}
-			{% endfor %}
-        <br>
-            <label for="insertCategorie">Ajouter une categorie :</label>
-            <input type="text" name="newCategorie[]" placeholder="insertCategorie">
-			<input type="submit" value="Insert">
-		</form>
-	{% endblock %}
+		{% for categorie in allCategories %}
+			<input type="checkbox" name="categories[]" value="{{ categorie.id }}">{{ categorie.name }}
+		{% endfor %}
+		<br>
+		<label for="insertCategorie">Ajouter une categorie :</label>
+		<input type="text" name="newCategorie[]" placeholder="insertCategorie">
+		<input type="submit" value="Insert">
+	</form>
+{% endblock %}
