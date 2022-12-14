@@ -46,6 +46,7 @@ class UserRepository extends EntityRepository
     function insertUser(array $data): void
     {
         $user = new User($data);
+        var_dump(gettype($user->getAddresses()));
 
         $this->_em->persist($user);
         $this->_em->flush();

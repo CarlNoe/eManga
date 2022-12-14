@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Entity;
 
 use App\Repository\MangaRepository;
@@ -10,3 +10,4 @@ use Doctrine\ORM\Mapping as ORM;
 class Order
 {
 }
+*/

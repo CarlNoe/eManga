@@ -6,27 +6,18 @@ use Framework\Response\Response;
 use Framework\Doctrine\EntityManager;
 use App\Entity\Manga;
 use Framework\HttpMethode\Cookie;
+use App\utils\DisplayCart;
 
 class Cart
 {
     public function __invoke()
     {
-        $co = Cookie::get('cart');
-        $cart = json_decode($co, true);
-        $mangaRepository = EntityManager::getRepository(Manga::class);
-        $mangas = [];
-        $total = 0;
-        foreach ($cart as $key => $value) {
-            $key = str_replace('id', '', $key);
-            $manga = $mangaRepository->find($key);
-            $manga->setStock($value);
-            $mangas[] = $manga;
-            $total += $manga->getPrice() * $value;
-        }
-
+        $allData = (new DisplayCart())();
         return new Response('displayCart.html.twig', [
-            'mangas' => $mangas,
-            'total' => $total,
+            'mangas' => $allData['mangas'],
+            'total' => $allData['total'],
+            'shippingCost' => $allData['shippingCost'],
+            'js' => ['addManga.js'],
         ]);
     }
 }

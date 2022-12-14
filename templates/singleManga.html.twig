@@ -18,7 +18,7 @@
 	<button value='{{manga.id}}' name='addToCart'>Ajouter au panier</button>
 
 	{#Ne pas toucher à l'id du select#}
-	<select name='quantity' id='quantity'>
+	<select id='quantity'>
 		{% for i in 1..manga.stock %}
 			<option value='{{i}}'>{{i}}</option>
 		{% endfor %}

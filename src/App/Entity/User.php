@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use App\Entity\Address;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
@@ -32,15 +36,6 @@ class User
     #[ORM\Column(type: 'string', length: 255, name: 'role')]
     protected string $role;
 
-    #[ORM\Column(type: 'string', length: 255, name: 'address')]
-    protected string $address;
-
-    #[ORM\Column(type: 'string', length: 255, name: 'city')]
-    protected string $city;
-
-    #[ORM\Column(type: 'string', length: 255, name: 'postal_code')]
-    protected string $postalCode;
-
     public function __construct(array $data)
     {
         $this->username = $data['username'];
@@ -49,9 +44,6 @@ class User
         $this->email = $data['email'];
         $this->password = password_hash($data['password'], PASSWORD_DEFAULT);
         $this->role = 'user';
-        $this->address = $data['address'];
-        $this->city = $data['city'];
-        $this->postalCode = $data['zipcode'];
     }
 
     public function getId(): int
@@ -124,33 +116,13 @@ class User
         $this->role = $role;
     }
 
-    public function getAddress(): string
+    public function getAddresses(): mixed
     {
-        return $this->address;
+        return $this->addresses;
     }
 
-    public function setAddress(string $address): void
+    public function __toString()
     {
-        $this->address = $address;
-    }
-
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): void
-    {
-        $this->city = $city;
-    }
-
-    public function getPostalCode(): string
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(string $postalCode): void
-    {
-        $this->postalCode = $postalCode;
+        return $this->id . ' ' . $this->role;
     }
 }

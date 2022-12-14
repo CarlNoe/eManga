@@ -45,8 +45,8 @@ function insertMangaFromApi(object $manga, EntityManagerInterface $em): Manga
         'title' => $manga->attributes->canonicalTitle,
         'description' => $manga->attributes->description,
         'image' => $image,
-        'price' => rand(1, 15),
-        'stock' => rand(1, 50),
+        'price' => rand(1, 15 * 100) / 100 + 1,
+        'stock' => rand(1, 15 * 100) / 100 + 1,
     ];
     $newManga = new Manga($parametersManga);
 

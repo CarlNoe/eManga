@@ -7,4 +7,6 @@ return [
         'http://' .
         $_SERVER['HTTP_HOST'] .
         str_replace($_SERVER['DOCUMENT_ROOT'], '', '/js/'),
+    'PAYPAL_CLIENT_ID' =>
+        'AavDx3CXJ6t277KqR7EObmRCnqvxBZN8Vr0uG1fZn0eiJF60-CIykuOmoLKjJgB-2HbTZBZY01qoZOPI',
 ];

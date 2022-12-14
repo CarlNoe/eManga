@@ -1,19 +1,3 @@
-document.getElementsByName('addToCart').forEach((button) => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault()
-
-        const data = {
-            idManga: button.value,
-            quantity:
-                document.getElementById('quantity') === null
-                    ? 1
-                    : document.getElementById('quantity').value,
-        }
-
-        addToCart(data)
-    })
-})
-
 const addToCart = async (data) => {
     await fetch('http://localhost:9990/js/insertCart.php', {
         // On envoie la requête à addToCart.php
@@ -36,3 +20,18 @@ const addToCart = async (data) => {
             console.log(error)
         })
 }
+
+document.getElementsByName('addToCart').forEach((button) => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault()
+        const data = {
+            idManga: button.value,
+            quantity:
+                document.getElementById('quantity') === null
+                    ? 1
+                    : document.getElementById('quantity').value,
+        }
+
+        addToCart(data)
+    })
+})

@@ -5,7 +5,7 @@ use Framework\HttpMethode\Cookie;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-$co = Cookie::getInstance();
+$cookie = Cookie::getInstance();
 
 $content = trim(file_get_contents('php://input'));
 $data = json_decode($content, true);
@@ -14,7 +14,9 @@ $data = json_decode($content, true);
 
 $id = 'id' . $data['idManga'];
 $quantity = $data['quantity'];
-$co->has('cart') ? ($cart = json_decode($co->get('cart'), true)) : ($cart = []);
+$cookie->has('cart')
+    ? ($cart = json_decode($cookie->get('cart'), true))
+    : ($cart = []);
 //check if product already in cart
 
 if (array_key_exists($id, $cart)) {
@@ -23,7 +25,7 @@ if (array_key_exists($id, $cart)) {
     $cart[$id] = $quantity;
 }
 
-$co->set('cart', $cart, time() + 3600);
+$cookie->set('cart', $cart, 1800);
 
 $response = [
     'InCart' => true,

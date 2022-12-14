@@ -2,32 +2,18 @@
 
 namespace App\utils\rules;
 
-use Framework\Doctrine\EntityManager;
-use App\Entity\User;
+use App\Entity\categories;
 use Framework\Rules\Rules;
 
-class ruleRegister
+class ruleAddress
 {
     public function __construct()
     {
         $this->rules = [
-            'username' => [
+            'street' => [
                 [
                     'rule' => 'required',
                 ],
-
-                [
-                    'rule' => 'length',
-                    'args' => [
-                        'max' => 20,
-                    ],
-                ],
-            ],
-            'password' => [
-                [
-                    'rule' => 'required',
-                ],
-
                 [
                     'rule' => 'length',
                     'args' => [
@@ -35,20 +21,10 @@ class ruleRegister
                     ],
                 ],
             ],
-            'password_confirm' => [
-                [
-                    'rule' => 'sameAs',
-                    'args' => [
-                        'field' => 'password',
-                        'errorMessage' => 'The password had to be the same !',
-                    ],
-                ],
-            ],
-            'firstName' => [
+            'city' => [
                 [
                     'rule' => 'required',
                 ],
-
                 [
                     'rule' => 'length',
                     'args' => [
@@ -56,11 +32,10 @@ class ruleRegister
                     ],
                 ],
             ],
-            'lastName' => [
+            'zipCode' => [
                 [
                     'rule' => 'required',
                 ],
-
                 [
                     'rule' => 'length',
                     'args' => [
@@ -68,38 +43,24 @@ class ruleRegister
                     ],
                 ],
             ],
-            'email' => [
+            'country' => [
                 [
                     'rule' => 'required',
                 ],
-
                 [
                     'rule' => 'length',
                     'args' => [
                         'max' => 100,
-                    ],
-                ],
-                [
-                    'rule' => 'uniq',
-                    'args' => [
-                        'callFunction' => 'isUniqEmail',
-                        'object' => $this,
-                        'errorMessage' => 'this email is already used',
                     ],
                 ],
             ],
         ];
     }
 
-    public function isValidateRegister($data)
+    public function isValidateAdress($data)
     {
         $ru = new Rules($this->rules);
 
         return $ru->validate($data);
-    }
-
-    public function isUniqEmail($data)
-    {
-        return EntityManager::getRepository(User::class)->isUniqEmail($data);
     }
 }

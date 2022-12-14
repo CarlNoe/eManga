@@ -22,7 +22,7 @@ class Cookie
 
     public static function set(string $key, $value, $time = 3600): void
     {
-        if (is_array($value)) {
+        if (!is_string($value)) {
             setcookie(
                 $key,
                 json_encode($value),
