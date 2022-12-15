@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-
+	{% include '/components/navbar.html.twig' %}
 	<form method='post' action='buyCart'>
 		<input type='text' name='street' placeholder='street'>
 		<input type='text' name='city' placeholder='city'>
@@ -18,7 +18,8 @@
 		<img src='{{ order.manga.image }}'><br>
 		{{ order.manga.title }}<br>
 		{{ order.manga.price }}Prix<br>
-		{{ order.quantity}}Quantité <br>
+		{{ order.quantity}}Quantité
+		<br>
 		<br>
 	{% endfor %}
 	<br>
@@ -26,8 +27,8 @@
 	{{orders.OrderSubTotal}}€<br>
 	Frais de Livraison
 	{{orders.shippingCost}}€
-		    Total
+			    Total
 	{{orders.OrderSubTotal + orders.shippingCost}}€<br>
 
-{{paypal | raw}}
+	{{paypal | raw}}
 {% endblock %}

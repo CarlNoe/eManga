@@ -27,7 +27,7 @@ class Register
                 $userRepository->insertUser($_POST);
             }
         }
-
+        var_dump($errors);
         return new Response('register.html.twig', ['errors' => $errors]);
     }
 }

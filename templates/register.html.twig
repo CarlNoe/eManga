@@ -6,6 +6,7 @@
 
 {% block body %}
 	{% include '/components/navbar.html.twig' %}
+
 	<main class="flex bg-gray-100 items-center justify-center h-[calc(100vh-4rem)]">
 		<div class="w-fit">
 			<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col items-center" method="post" action="register">
@@ -14,19 +15,19 @@
 						<label class="block text-gray-700 text-sm font-bold mb-2" for="email">
 							Email
 						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email" name="email">
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-bold mb-2" for="password">
 							Password
 						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" name="password">
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-bold mb-2" for="password_confirm">
 							Confirm password
 						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password_confirm" type="password" placeholder="******************">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password_confirm" type="password" placeholder="******************" name="password_confirm">
 					</div>
 				</div>
 				<div class="flex">
@@ -34,41 +35,22 @@
 						<label class="block text-gray-700 text-sm font-bold mb-2" for="lastName">
 							Last Name
 						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" placeholder="Last Name">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" placeholder="Last Name" name="lastName">
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-bold mb-2" for="firstName">
 							First Name
 						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" placeholder="First Name">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" placeholder="First Name" name="firstName">
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-bold mb-2" for="username">
 							Username
 						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" name="username">
 					</div>
 				</div>
-				<div class="flex">
-					<div class="mb-4">
-						<label class="block text-gray-700 text-sm font-bold mb-2" for="city">
-							City
-						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="city" type="text" placeholder="City">
-					</div>
-					<div class="mb-4">
-						<label class="block text-gray-700 text-sm font-bold mb-2" for="address">
-							Address
-						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="address" type="text" placeholder="Address">
-					</div>
-					<div class="mb-4">
-						<label class="block text-gray-700 text-sm font-bold mb-2" for="zipcode">
-							Postal Code
-						</label>
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="zipcode" type="text" placeholder="Postal Code">
-					</div>
-				</div>
+
 				<div class="flex items-center justify-between">
 					<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
 						Register

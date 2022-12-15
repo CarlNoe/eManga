@@ -40,6 +40,7 @@ class Cart
             'orders' => $order,
             'js' => ['addManga.js'],
             'paypal' => $paypal->ui($order),
+            'isConnected' => $session->has('user'),
         ]);
     }
 
