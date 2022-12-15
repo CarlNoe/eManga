@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-	{% include 'navbar.html.twig' %}
+	{% include '/components/navbar.html.twig' %}
 	{{errors|join(', ') }}
 	<main class="flex justify-center items-center h-[calc(100vh-4rem)]">
 		<form method="post" action="login" class="bg-white shadow-md min-w-[400px] rounded px-8 pt-6 pb-8">
