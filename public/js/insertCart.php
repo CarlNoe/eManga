@@ -1,6 +1,7 @@
 <?php
 
 namespace js;
+
 use Framework\HttpMethode\Cookie;
 
 require_once __DIR__ . '/../../vendor/autoload.php';

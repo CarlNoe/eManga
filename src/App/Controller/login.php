@@ -40,7 +40,6 @@ class login
                 header('Location: /');
             }
         }
-        var_dump($errors);
         return new Response('login.html.twig', ['errors' => $errors]);
     }
 }

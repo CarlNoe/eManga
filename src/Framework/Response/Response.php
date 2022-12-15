@@ -16,10 +16,6 @@ class Response
     ): Response {
         $controller = new $controller();
 
-        if (!is_callable($controller)) {
-            var_dump('You controller is not a valid callable!');
-        }
-
         return $controller($args);
     }
 

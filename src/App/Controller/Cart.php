@@ -28,7 +28,6 @@ class Cart
         if (!empty($_POST)) {
             $ruleAdress = new ruleAddress();
             $errors = $ruleAdress->isValidateAdress($_POST);
-            var_dump($errors);
         }
         $paypal = new PaypalPayment(
             Config::get('PAYPAL_CLIENT_ID'),

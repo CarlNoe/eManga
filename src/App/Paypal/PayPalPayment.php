@@ -135,7 +135,6 @@ HTML;
         // On capture l'autorisation
         $request = new AuthorizationsCaptureRequest($authorizationId);
         $response = $client->execute($request);
-        var_dump($response);
         if ($response->result->status !== 'COMPLETED') {
             throw new \Exception();
         }

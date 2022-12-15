@@ -29,7 +29,6 @@ class NewManga
             $ruleRegister = new ruleManga(true);
 
             $errors = $ruleRegister->isValidateManga($_POST);
-            var_dump($errors);
             if (empty($errors)) {
                 $manga = new Manga($_POST);
 

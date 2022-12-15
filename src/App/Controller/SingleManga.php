@@ -46,7 +46,6 @@ class SingleManga
         if ($post->hasPost()) {
             $ruleRegister = new ruleManga(false);
             $errors = $ruleRegister->isValidateManga($_POST);
-            var_dump($errors);
             if (empty($errors)) {
                 EntityManager::getRepository(Manga::class)->updateManga(
                     $_POST,

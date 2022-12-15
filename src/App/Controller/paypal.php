@@ -20,7 +20,6 @@ class Paypal
             true
         );
         $cart = $_SESSION['cart'];
-        var_dump($cart);
         $paypal->handle($cart);
     }
 }
