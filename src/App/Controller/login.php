@@ -14,6 +14,9 @@ class login
     {
         $errors = [];
         Session::start();
+        if (Session::get('user') != null || Cookie::get('user') != null) {
+            header('Location: /');
+        }
         if (isset($_POST['email']) && isset($_POST['password'])) {
             $userRepository = EntityManager::getRepository(User::class);
             $user = $userRepository->getUser(

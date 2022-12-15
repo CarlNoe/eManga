@@ -24,21 +24,24 @@ class Order
     protected float $shippingCost;
 
     #[ORM\Column(type: 'float', name: 'order_total')]
-    protected float $orderTotal;
+    protected float $orderSubTotal;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     private User|null $user = null;
 
+    #[ORM\OneToMany(mappedBy: 'order', targetEntity: OrderQuantity::class)]
+    private array $orderQuantities = [];
+
     public function __construct(
         User $user,
         float $shippingCost,
-        float $orderTotal
+        float $orderSubTotal
     ) {
         $this->user = $user;
         $this->orderDate = new DateTime();
         $this->orderStatus = 'pending';
         $this->shippingCost = $shippingCost;
-        $this->orderTotal = $orderTotal;
+        $this->orderSubTotal = $orderSubTotal;
     }
 
     public function getId(): int
@@ -81,14 +84,14 @@ class Order
         $this->shippingCost = $shippingCost;
     }
 
-    public function getOrderTotal(): float
+    public function getOrderSubTotal(): float
     {
-        return $this->orderTotal;
+        return $this->orderSubTotal;
     }
 
-    public function setOrderTotal(float $orderTotal): void
+    public function setOrderSubTotal(float $orderSubTotal): void
     {
-        $this->orderTotal = $orderTotal;
+        $this->orderTotal = $orderSubTotal;
     }
 
     public function getUser(): User
@@ -99,5 +102,38 @@ class Order
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    public function getOrderQuantities(): array
+    {
+        return $this->orderQuantities;
+    }
+
+    public function setOrderQuantities(array $orderQuantities): void
+    {
+        $this->orderQuantities = $orderQuantities;
+    }
+
+    public function addOrderSubTotal(float $orderSubTotal): void
+    {
+        $this->orderSubTotal += $orderSubTotal;
+    }
+
+    public function addShippingCost(float $shippingCost): void
+    {
+        $this->shippingCost += $shippingCost;
+    }
+
+    public function addOrderQuantity(OrderQuantity $orderQuantity): void
+    {
+        $this->orderQuantities[] = $orderQuantity;
+    }
+
+    public function removeOrderQuantity(OrderQuantity $orderQuantity): void
+    {
+        $this->orderQuantities = array_filter(
+            $this->orderQuantities,
+            fn($oq) => $oq->getId() !== $orderQuantity->getId()
+        );
     }
 }

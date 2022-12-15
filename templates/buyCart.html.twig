@@ -6,28 +6,5 @@
 
 {% block body %}
 
-	<form method='post' action='buyCart'>
-		<input type='text' name='street' placeholder='street'>
-		<input type='text' name='city' placeholder='city'>
-		<input type='text' name='zipCode' placeholder='zipCode'>
-		<input type='text' name='country' placeholder='country'>
-		<input type='submit' value='Je paye'>
-	</form>
-
-	{% for manga in mangas %}
-		<img src='{{ manga.0.image }}'><br>
-		{{ manga.0.title }}<br>
-		{{ manga.0.price }}Prix<br>
-		{{ manga.1}}
-		<br>
-	{% endfor %}
-	<br>
-	Sous-Total
-	{{total}}€<br>
-	Frais de Livraison
-	{{shippingCost}}€
-		    Total
-	{{total + shippingCost}}€<br>
-
-{{paypal | raw}}
+	{{data}}
 {% endblock %}

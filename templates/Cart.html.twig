@@ -14,20 +14,20 @@
 		<input type='submit' value='Je paye'>
 	</form>
 
-	{% for manga in mangas %}
-		<img src='{{ manga.0.image }}'><br>
-		{{ manga.0.title }}<br>
-		{{ manga.0.price }}Prix<br>
-		{{ manga.1}}
+	{% for order in orders.OrderQuantities %}
+		<img src='{{ order.manga.image }}'><br>
+		{{ order.manga.title }}<br>
+		{{ order.manga.price }}Prix<br>
+		{{ order.quantity}}Quantité <br>
 		<br>
 	{% endfor %}
 	<br>
 	Sous-Total
-	{{total}}€<br>
+	{{orders.OrderSubTotal}}€<br>
 	Frais de Livraison
-	{{shippingCost}}€
+	{{orders.shippingCost}}€
 		    Total
-	{{total + shippingCost}}€<br>
+	{{orders.OrderSubTotal + orders.shippingCost}}€<br>
 
 {{paypal | raw}}
 {% endblock %}
