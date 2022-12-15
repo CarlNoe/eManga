@@ -27,11 +27,11 @@ document.getElementsByName('addToCart').forEach((button) => {
         const data = {
             idManga: button.value,
             quantity:
-                document.getElementById('quantity') === null
+                document.getElementById('currentQuantity') === null
                     ? 1
-                    : document.getElementById('quantity').value,
+                    : document.getElementById('currentQuantity').value,
         }
-
+        console.log(data)
         addToCart(data)
     })
 })

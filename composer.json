@@ -6,7 +6,8 @@
         "nikic/fast-route": "^1.3",
         "nyholm/psr7": "^1.5",
         "doctrine/orm": "^2.13",
-        "symfony/cache": "^6.1"
+        "symfony/cache": "^6.2",
+        "paypal/paypal-checkout-sdk": "^1.0"
     },
     "autoload": {
         "psr-4": {

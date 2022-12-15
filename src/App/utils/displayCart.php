@@ -23,6 +23,7 @@ class DisplayCart
             $total += $manga->getPrice() * $value;
             $shippingCost += $value;
         }
+
         return [
             'mangas' => $mangas,
             'total' => $total,

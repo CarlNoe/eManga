@@ -20,5 +20,6 @@ return [
         new Route(['GET', 'POST'], '/newmanga', NewManga::class),
         new Route('GET', '/cart', Cart::class),
         new Route(['GET', 'POST'], '/buyCart', BuyCart::class),
+        new Route('GET', '/paypal', Paypal::class),
     ],
 ];

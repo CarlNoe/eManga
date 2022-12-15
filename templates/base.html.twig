@@ -5,8 +5,11 @@
 		<title>
 			{% block title %}{% endblock %}
 		</title>
+		<link rel="stylesheet" href="/style.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+		{% block script %}{% endblock %}
 	</head>
-	<body>
+	<body class="bg-gray-100">
 		{% block body %}{% endblock %}
 	</body>
 </html>
