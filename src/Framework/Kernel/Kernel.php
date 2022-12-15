@@ -2,6 +2,7 @@
 
 namespace Framework\Kernel;
 
+use Framework\Config\Config;
 use Framework\Response\Response;
 use Framework\Routing\Routing;
 use Framework\Templating\TemplatingInterface;
@@ -26,5 +27,19 @@ class Kernel
     public function display(Response $response)
     {
         echo $this->templating->render($response);
+    }
+
+    public function callJs(Response $response)
+    {
+        $js = $response->getJs();
+
+        if (!empty($js)) {
+            foreach ($js as $value) {
+                echo '<script src="' .
+                    Config::get('JS_PATH') .
+                    $value .
+                    '"></script>';
+            }
+        }
     }
 }

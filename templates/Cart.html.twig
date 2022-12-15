@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'title.home' }}
+{% endblock %}
+
+{% block body %}
+
+	<form method='post' action='buyCart'>
+		<input type='text' name='street' placeholder='street'>
+		<input type='text' name='city' placeholder='city'>
+		<input type='text' name='zipCode' placeholder='zipCode'>
+		<input type='text' name='country' placeholder='country'>
+		<input type='submit' value='Je paye'>
+	</form>
+
+	{% for order in orders.OrderQuantities %}
+		<img src='{{ order.manga.image }}'><br>
+		{{ order.manga.title }}<br>
+		{{ order.manga.price }}Prix<br>
+		{{ order.quantity}}Quantité <br>
+		<br>
+	{% endfor %}
+	<br>
+	Sous-Total
+	{{orders.OrderSubTotal}}€<br>
+	Frais de Livraison
+	{{orders.shippingCost}}€
+		    Total
+	{{orders.OrderSubTotal + orders.shippingCost}}€<br>
+
+{{paypal | raw}}
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Framework\HttpMethode\Cookie;
 use Framework\Response\Response;
 use Framework\HttpMethode\Session;
 use App\Entity\Manga;
@@ -11,15 +12,24 @@ class Homepage
 {
     public function __invoke()
     {
-        $role = 'user';
         $se = Session::getInstance();
         $se->start();
-        if ($se->has('user')) {
-            var_dump('connecté');
-            $se->get('user')->getRole() == 'admin' ? ($role = 'admin') : null;
+        $role = ' ';
+        if ($se->has('user') || Cookie::has('user')) {
+            $user = $se->has('user')
+                ? $se->get('user')
+                : unserialize(Cookie::get('user'));
+            password_verify('admin', $role)
+                ? ($role = 'admin')
+                : ($role = 'user');
+            var_dump($user);
         }
-        if ($se->has('user') && isset($_GET['disconnect'])) {
+        if (
+            ($se->has('user') || Cookie::has('user')) &&
+            isset($_GET['disconnect'])
+        ) {
             $se->remove('user');
+            Cookie::remove('user');
             header('Location: /');
         }
 
@@ -38,6 +48,7 @@ class Homepage
             'categories' => $categories,
             'page' => $_GET['page'] ?? 1,
             'allPages' => $mangaRepository->getAllPages(),
+            'js' => ['addManga.js'],
         ]);
     }
 }

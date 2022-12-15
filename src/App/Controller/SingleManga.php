@@ -24,6 +24,7 @@ class SingleManga
             $role = $se->get('user')->getRole();
         }
 
+        //Si l'utilisateur est admin et qu'il a cliqué sur le bouton supprimer
         if (isset($_GET['delete']) && $role == 'admin') {
             EntityManager::getRepository(
                 CategoriesManga::class
@@ -33,6 +34,7 @@ class SingleManga
 
             header('Location: /');
         }
+        //Si l'utilisateur est admin et qu'il a cliqué sur le bouton modifier
         isset($_GET['id']) ? $se->set('id_manga', $_GET['id']) : ' ';
         $manga = $mangaRepository->findOneById($se->get('id_manga'));
         $categories = $mangaRepository->findCategories($manga->getId());
@@ -56,11 +58,12 @@ class SingleManga
                 )->UpdateMangaCategories($_POST['categories'], $manga);
             }
         }
-        return new Response(
-            'singleManga.html.twig',
-            ['manga' => $manga] + ['categories' => $categories] + [
-                    'role' => $role,
-                ] + ['allCategories' => $allCategories]
-        );
+        return new Response('singleManga.html.twig', [
+            'manga' => $manga,
+            'categories' => $categories,
+            'role' => $role,
+            'allCategories' => $allCategories,
+            'js' => ['addManga.js'],
+        ]);
     }
 }

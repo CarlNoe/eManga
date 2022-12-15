@@ -38,7 +38,6 @@ class Config
                 self::glob($dir . '/' . basename($pattern), $flags)
             );
         }
-
         return $files;
     }
 }

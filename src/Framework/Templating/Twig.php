@@ -14,9 +14,7 @@ class Twig implements TemplatingInterface
 
     public function __construct()
     {
-        $this->loader = new FilesystemLoader(
-            dirname(dirname(dirname(__DIR__))) . '/templates'
-        );
+        $this->loader = new FilesystemLoader(Config::get('TEMPLATES_PATH'));
         $this->twig = new Environment($this->loader, [
             //'cache' => '/path/to/compilation_cache',
         ]);
@@ -26,7 +24,8 @@ class Twig implements TemplatingInterface
     {
         return $this->twig->render(
             $response->getTemplate(),
-            $response->getArgs()
+            $response->getArgs(),
+            $response->getJs()
         );
     }
 }
