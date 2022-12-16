@@ -5,21 +5,52 @@
 {% endblock %}
 
 {% block body %}
-	<form method="post" action="newmanga">
-		<input type="text" name="title" placeholder="Title">
-		<input type="text" name="description" placeholder="description">
-		<input type="text" name="image" placeholder="image">
-		<label for="image">Image à partir d'un lien</label>
-		<input type="text" name="price" placeholder="price">
-		<input type="text" name="stock" placeholder="stock">
-		<br>
-		<label for="categorie">Categorie :</label>
-		{% for categorie in allCategories %}
-			<input type="checkbox" name="categories[]" value="{{ categorie.id }}">{{ categorie.name }}
-		{% endfor %}
-		<br>
-		<label for="insertCategorie">Ajouter une categorie :</label>
-		<input type="text" name="newCategorie[]" placeholder="insertCategorie">
-		<input type="submit" value="Insert">
-	</form>
+	{% include '/components/navbar.html.twig' %}
+	<main class="flex flex-col items-center justify-center w-full h-[calc(100vh-4rem)] bg-gray-100">
+		<div class="w-full rounded p-16 overflow-auto">
+			<h1 class="text-2xl font-bold mb-5">Admin</h1>
+			<form method="post" action="newmanga" class="flex flex-col">
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="title">Titre</label>
+					<input class="rounded pl-3 pr-3 pt-1 pb-1 text-blue-500 font-semibold" type="text" name="title" value="{{ manga.title }}" placeholder="Title">
+				</div>
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="description">Description</label>
+					<textarea class="rounded pl-3 pr-3 pt-1 pb-1 text-blue-500 font-semibold" name="description" id="description" cols="30" rows="10" placeholder="description">{{ manga.description }}</textarea>
+				</div>
+
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="image">Image à partir d'un lien</label>
+					<input class="rounded pl-3 pr-3 pt-1 pb-1 text-blue-500 font-semibold" type="text" name="image" value="{{ manga.image }}" placeholder="image">
+				</div>
+
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="price">Prix</label>
+					<input class="rounded pl-3 pr-3 pt-1 pb-1 text-blue-500 font-semibold" type="number" name="price" value="{{ manga.price }}" placeholder="price">
+				</div>
+
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="stock">Stock</label>
+					<input class="rounded pl-3 pr-3 pt-1 pb-1 text-blue-500 font-semibold" type="number" name="stock" value="{{ manga.stock }}" placeholder="stock">
+				</div>
+
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="categorie">Categorie :</label>
+					{% for categorie in allCategories %}
+						<div class="flex items-center mt-2">
+							<input type="checkbox" name="categories[]" value="{{ categorie.id }}" class="mr-2">
+							<span class="font-semibold text-blue-500">{{ categorie.name }}</span>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="flex flex-col mt-5">
+					<label class="text-lg font-bold" for="insertCategorie">Ajouter une categorie :</label>
+					<input class="rounded pl-3 pr-3 pt-1 pb-1 text-blue-500 font-semibold" type="text" name="newCategorie[]" placeholder="insertCategorie">
+				</div>
+				<div class="flex mt-5">
+					<input type="submit" value="Insert" class="bg-blue-500 rounded-lg pl-3 pr-3 pt-1 pb-1 text-white font-semibold hover:opacity-60">
+				</div>
+			</form>
+		</div>
+	</main>
 {% endblock %}
