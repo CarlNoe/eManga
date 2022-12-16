@@ -13,21 +13,23 @@ use App\Entity\Order;
 use App\Entity\OrderQuantity;
 use App\Entity\Manga;
 use App\Entity\User;
-use Doctrine\ORM\Mapping\Entity;
+use App\Entity\UsersAddresses;
 use Framework\Doctrine\EntityManager;
 
 class Cart
 {
     public function __invoke()
     {
+        header('Access-Control-Allow-Origin: *');
         $session = Session::getInstance();
         $session->start();
         $user = EntityManager::getRepository(User::class)->find(
             $session->get('user')->getId()
         );
-        $adresseRepository = EntityManager::getRepository(Address::class);
-        $AdressesOfUser = $adresseRepository->getAdressesOfUser($user->getId());
-
+        $adresseRepository = EntityManager::getRepository(
+            UsersAddresses::class
+        );
+        $AdressesOfUser = $adresseRepository->findAddress($user->getId());
         if (!($session->has('user') || Cookie::has('user'))) {
             header('Location: /');
         }
@@ -37,11 +39,14 @@ class Cart
             $errors = $ruleAdress->isValidateAdress($_POST);
             if (empty($errors)) {
                 $address = new Address($_POST);
-                $user->addAddress($address);
-                $adresseRepository->insertAddress($address);
+                EntityManager::getRepository(Address::class)->insertAddress(
+                    $address
+                );
+                EntityManager::getRepository(
+                    UsersAddresses::class
+                )->insertUserAddress($user, $address);
             }
         }
-        header('Access-Control-Allow-Origin: *');
 
         $order = $this->createOrder();
 
@@ -62,11 +67,18 @@ class Cart
 
     public function createOrder(): Order
     {
+        $address = null;
         $user = Session::has('user')
             ? Session::get('user')
             : unserialize(Cookie::get('user'));
         $mangaRepository = EntityManager::getRepository(Manga::class);
-        $order = new Order($user, 0, 0);
+        if (!empty($_GET)) {
+            $address = EntityManager::getRepository(Address::class)->find(
+                $_GET['address']
+            );
+        }
+        $order = new Order($user, 0, 0, $address);
+
         $cart = json_decode(Cookie::get('cart'), true);
         if ($cart !== null) {
             foreach ($cart as $key => $quantity) {

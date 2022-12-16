@@ -4,6 +4,10 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\Address;
+use App\Entity\Order;
+use App\Entity\OrderQuantity;
+use App\Entity\Manga;
+
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
@@ -85,5 +89,32 @@ class UserRepository extends EntityRepository
             ->setParameter('id', $id);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function getResumeOrders(int $id): array
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder
+            ->select('o', 'm', 'oq')
+            ->from(Order::class, 'o')
+            ->join('o.user', 'u')
+            ->join('o.orderQuantities', 'oq')
+            ->join('oq.manga', 'm')
+            ->where('u.id = :id')
+            ->setParameter('id', $id);
+
+        return $queryBuilder->getQuery()->getArrayResult();
+    }
+
+    public function getAllResumeOrders(): array
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder
+            ->select('o', 'm', 'oq')
+            ->from(Order::class, 'o')
+            ->join('o.orderQuantities', 'oq')
+            ->join('oq.manga', 'm');
+
+        return $queryBuilder->getQuery()->getArrayResult();
     }
 }

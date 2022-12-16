@@ -19,9 +19,7 @@ class Homepage
             $user = $se->has('user')
                 ? $se->get('user')
                 : unserialize(Cookie::get('user'));
-            password_verify('admin', $role)
-                ? ($role = 'admin')
-                : ($role = 'user');
+            $user->getRole() ? ($role = 'admin') : ($role = 'user');
         }
         if (
             ($se->has('user') || Cookie::has('user')) &&

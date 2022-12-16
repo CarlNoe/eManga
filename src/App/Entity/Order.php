@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\User;
 use DateTime;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -28,8 +29,8 @@ class Order
     #[ORM\Column(type: 'float', name: 'order_total')]
     protected float $orderSubTotal;
 
-    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'])]
-    private User|null $user = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    protected User $user;
 
     #[
         ORM\OneToMany(
@@ -41,10 +42,14 @@ class Order
     ]
     private $orderQuantities;
 
+    #[ORM\ManyToOne(targetEntity: Address::class, cascade: ['persist'])]
+    private Address|null $address = null;
+
     public function __construct(
         User $user,
         float $shippingCost,
-        float $orderSubTotal
+        float $orderSubTotal,
+        Address|null $address
     ) {
         $this->user = $user;
         $this->orderDate = new DateTime();
@@ -52,6 +57,7 @@ class Order
         $this->shippingCost = $shippingCost;
         $this->orderSubTotal = $orderSubTotal;
         $this->orderQuantities = new ArrayCollection();
+        $this->address = $address;
     }
 
     public function getId(): int
@@ -152,5 +158,15 @@ class Order
         }
 
         return $this;
+    }
+
+    public function getAddress(): Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(Address $address): void
+    {
+        $this->address = $address;
     }
 }

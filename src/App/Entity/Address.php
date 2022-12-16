@@ -30,16 +30,6 @@ class Address
     #[ORM\Column(type: 'string', length: 255, name: 'country')]
     protected string $country;
 
-    #[
-        ManyToMany(
-            targetEntity: User::class,
-            inversedBy: 'users',
-            cascade: ['persist']
-        )
-    ]
-    #[JoinTable(name: 'user_addresses')]
-    protected $users;
-
     public function __construct(array $data)
     {
         $this->street = $data['street'];
@@ -107,21 +97,5 @@ class Address
     public function setUsers($users): void
     {
         $this->users = $users;
-    }
-
-    public function addUser(User $user): void
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addAddress($this);
-        }
-    }
-
-    public function removeUser(User $user): void
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->addAddress($this);
-        }
     }
 }

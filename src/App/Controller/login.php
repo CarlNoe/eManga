@@ -26,9 +26,6 @@ class login
             if ($user == null) {
                 $errors = 'Email ou mot de passe incorrect';
             } else {
-                $user->setRole(
-                    password_hash($user->getRole(), PASSWORD_DEFAULT)
-                );
                 if ($_POST['remember_me'] == '1') {
                     Cookie::set(
                         'user',

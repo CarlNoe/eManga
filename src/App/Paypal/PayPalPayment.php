@@ -129,9 +129,7 @@ HTML;
         $request = new AuthorizationsGetRequest($authorizationId);
         $authorizationResponse = $client->execute($request);
         $amount = $authorizationResponse->result->amount->value;
-        var_dump($amount);
-        var_dump($total);
-        if ((float) $amount !== (float) $total) {
+        if ((int) $amount !== (int) $total) {
             throw new PaymentAmountMissmatchException($amount, $total);
         }
 
@@ -166,12 +164,10 @@ HTML;
         $mangaRepository = EntityManager::getRepository(Manga::class);
 
         foreach ($order->getOrderQuantities() as $orderQuantity) {
-            var_dump($orderQuantity->getManga()->getId());
             $manga = $mangaRepository->find(
                 $orderQuantity->getManga()->getId()
             );
-            var_dump($manga);
-            if ($orderQuantity->getQuantity() >= $manga->getStock()) {
+            if ($orderQuantity->getQuantity() > $manga->getStock()) {
                 throw new \Exception();
             }
         }
@@ -197,6 +193,7 @@ HTML;
     private function saveOrder(object $order): void
     {
         $orderRepository = EntityManager::getRepository(Order::class);
+        var_dump($order->getUser());
         $orderRepository->insertOrder($order);
     }
 

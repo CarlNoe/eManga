@@ -19,7 +19,7 @@ class OrderRepository extends EntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
-    public function insertOrder(array|Order $order): void
+    public function insertOrder(Order $order): void
     {
         $this->_em->persist($order);
         $this->_em->flush();

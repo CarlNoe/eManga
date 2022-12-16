@@ -55,13 +55,16 @@
 			{{paypal | raw}}
 		</aside>
 	</main>
-	{% for category in onlyAddresses %}
-    {{ category.street }}
-	{{ category.city }}
-	{{ category.zipCode }}
-	{{ category.country }}
-	{{ category.quantity }}
-	
-	
-{% endfor %}
+	<form action='cart' method='GET'>
+		<select name="address" id="address">
+
+			{% for addresse in onlyAddresses %}
+				<option value="{{ addresse.id }}">{{ addresse.street }}
+					{{ addresse.city }}
+					{{ addresse.zipCode }}
+					{{ addresse.country }}</option>
+			{% endfor %}
+		</select>
+		<button  type='submit' for="address">Choisir une adresse</button>
+	</form>
 {% endblock %}
