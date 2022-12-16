@@ -22,7 +22,9 @@ class PaypalPayment
 
     public function ui(object $cart): string
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $paypalId =
             'https://www.paypal.com/sdk/js?client-id=' .
             Config::get('PAYPAL_CLIENT_ID') .
