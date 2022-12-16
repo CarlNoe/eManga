@@ -1,6 +1,9 @@
 <?php
 
+namespace App\Repository;
+
 use Doctrine\ORM\EntityRepository;
+use App\Entity\Order;
 
 class OrderRepository extends EntityRepository
 {
@@ -16,6 +19,11 @@ class OrderRepository extends EntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
+    public function insertOrder(array|Order $order): void
+    {
+        $this->_em->persist($order);
+        $this->_em->flush();
+    }
     public function findOrderStatus(int $id)
     {
         $queryBuilder = $this->_em->createQueryBuilder();

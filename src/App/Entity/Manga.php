@@ -29,6 +29,9 @@ class Manga
     #[ORM\Column(type: 'integer', name: 'stock')]
     protected int $stock;
 
+    #[ORM\Column(type: 'integer', name: 'reserve')]
+    protected int $reseverd = 0;
+
     public function __construct(array $data = [])
     {
         $this->title = $data['title'];
@@ -96,5 +99,15 @@ class Manga
     public function setStock(int $stock): void
     {
         $this->stock = $stock;
+    }
+
+    public function getReseverd(): int
+    {
+        return $this->reseverd;
+    }
+
+    public function setReseverd(int $reseverd): void
+    {
+        $this->reseverd = $reseverd;
     }
 }

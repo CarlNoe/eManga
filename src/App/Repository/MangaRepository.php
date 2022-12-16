@@ -94,16 +94,36 @@ class MangaRepository extends EntityRepository
         return ceil($queryBuilder->getQuery()->getSingleScalarResult() / 10);
     }
 
-    function updateManga(array $newManga, int $id): void
+    function updateManga(array|object $newManga, int $id = 0): void
     {
         $manga = $this->findOneById($id);
-        $manga->setTitle($newManga['title']);
-        $manga->setDescription($newManga['description']);
-        $manga->setPrice($newManga['price']);
-        $manga->setStock($newManga['stock']);
-        $manga->setImage($newManga['image']);
+        if (is_array($newManga)) {
+            $manga->setTitle($newManga['title']);
+            $manga->setDescription($newManga['description']);
+            $manga->setPrice($newManga['price']);
+            $manga->setStock($newManga['stock']);
+            $manga->setImage($newManga['image']);
+        } else {
+            $manga->setTitle($newManga->getTitle());
+            $manga->setDescription($newManga->getDescription());
+            $manga->setPrice($newManga->getPrice());
+            $manga->setStock($newManga->getStock());
+            $manga->setImage($newManga->getImage());
+        }
 
         $this->_em->persist($manga);
         $this->_em->flush();
+    }
+
+    function getReserved(int $id)
+    {
+        $query = $this->_em->createQueryBuilder();
+        $query
+            ->select('m.reserved')
+            ->from(Manga::class, 'm')
+            ->where('m.id = :id')
+            ->setParameter('id', $id);
+
+        return $query->getQuery()->getSingleScalarResult();
     }
 }

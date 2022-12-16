@@ -18,7 +18,7 @@ return [
         new Route(['GET', 'POST'], '/manga', SingleManga::class),
         new Route('GET', '/allmanga', AllManga::class),
         new Route(['GET', 'POST'], '/newmanga', NewManga::class),
-        new Route('GET', '/cart', Cart::class),
+        new Route(['GET', 'POST'], '/cart', Cart::class),
         new Route(['POST', 'GET'], '/paypal', Paypal::class),
     ],
 ];

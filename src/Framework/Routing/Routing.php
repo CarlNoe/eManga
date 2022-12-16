@@ -56,8 +56,7 @@ class Routing
                 if (class_exists($controller)) {
                     return Response::buildWithController($controller, $vars);
                 }
-                echo 'error';
-                die();
+
                 break;
         }
     }

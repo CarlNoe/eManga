@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OrderQuantityRepository;
 
 #[ORM\Entity(repositoryClass: OrderQuantityRepository::class)]
 #[ORM\Table(name: 'order_quantity')]
@@ -19,10 +20,10 @@ class OrderQuantity
     #[ORM\Column(type: 'float', name: 'price')]
     protected float $price;
 
-    #[ORM\ManyToOne(targetEntity: Order::class)]
+    #[ORM\ManyToOne(targetEntity: Order::class, cascade: ['persist'])]
     private Order|null $order = null;
 
-    #[ORM\ManyToOne(targetEntity: Manga::class)]
+    #[ORM\ManyToOne(targetEntity: Manga::class, cascade: ['persist'])]
     private Manga|null $manga = null;
 
     public function __construct(
@@ -72,7 +73,7 @@ class OrderQuantity
         return $this->order;
     }
 
-    public function setOrder(Order $order): void
+    public function setOrder(Order|null $order): void
     {
         $this->order = $order;
     }

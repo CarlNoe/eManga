@@ -2,14 +2,21 @@
 
 namespace App\Paypal;
 
+use App\Entity\Manga;
+use App\Entity\Order;
+use App\Entity\OrderQuantity;
 use Framework\Config\Config;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Payments\AuthorizationsGetRequest;
 use PayPalCheckoutSdk\Payments\AuthorizationsCaptureRequest;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use Framework\Exception\PaymentAmountMissmatchException;
 use Framework\Request\Request;
+use Framework\Doctrine\EntityManager;
+use Framework\Response\Response;
+use PayPalHttp\Serializer\Json;
 
 class PaypalPayment
 {
@@ -22,7 +29,6 @@ class PaypalPayment
 
     public function ui(object $cart): string
     {
-        session_start();
         $paypalId =
             'https://www.paypal.com/sdk/js?client-id=' .
             Config::get('PAYPAL_CLIENT_ID') .
@@ -43,7 +49,7 @@ class PaypalPayment
                                 'currency_code' => 'EUR',
                             ],
                         ];
-                    }, $cart->getOrderQuantities()),
+                    }, $cart->getOrderQuantities()->toArray()),
                     'amount' => [
                         'currency_code' => 'EUR',
                         'value' => $total / 100,
@@ -62,7 +68,6 @@ class PaypalPayment
             ],
         ]);
         $_SESSION['cart'] = $cart;
-        $cart = json_encode($cart);
         return <<<HTML
 <script src='{$paypalId}'></script>
 <!-- Set up a container element for the button -->
@@ -86,17 +91,25 @@ class PaypalPayment
         },
         body: 
         JSON.stringify({authorizationId})
-      })
-      alert('Votre paiement a bien été enregistré')
+    }).then(res => res.json()
+    ).then(data => {
+        if (data.success) {
+            window.location.href = '/order/' + data.orderId
+        } else {
+            alert('Une erreur est survenue')
+        }
+    }
+    )
     }
   }).render('#paypal-button-container');
 </script>
 HTML;
     }
 
-    public function handle(object $order): void
+    public function handle(object $order, string $authorizationId): void
     {
-        $total = $order->getSubtotall() + $order->getShippingCost();
+        $success = false;
+        $total = $order->getOrderSubTotal() + $order->getShippingCost();
         $request = Request::fromGlobals();
         if ($this->sandbox) {
             $environment = new SandboxEnvironment(
@@ -110,12 +123,12 @@ HTML;
             );
         }
         $client = new PayPalHttpClient($environment);
-        $authorizationId = $request->getParsedBody()['authorizationId'];
-        $order = $request->getParsedBody()['order'];
         $request = new AuthorizationsGetRequest($authorizationId);
         $authorizationResponse = $client->execute($request);
         $amount = $authorizationResponse->result->amount->value;
-        if ($amount !== $total) {
+        var_dump($amount);
+        var_dump($total);
+        if ((float) $amount !== (float) $total) {
             throw new PaymentAmountMissmatchException($amount, $total);
         }
 
@@ -123,21 +136,74 @@ HTML;
         $orderId =
             $authorizationResponse->result->supplementary_data->related_ids
                 ->order_id;
-        // $request = new OrdersGetRequest($orderId);
-        // $orderResponse = $client->execute($request);
+        $request = new OrdersGetRequest($orderId);
 
-        // Vérifier si le stock est dispo
-
+        // Vérifier si le stock est dispo pour chaque produit
+        $this->checkStock($order);
         // Verrouiller le produit (retirer du stock pour éviter une commande en parallèle entre temps)
-
-        // Sauvegarder les informations de l'utilisateur
+        $this->lockStock($order);
+        //On enregistre la commande
+        $this->saveOrder($order);
+        //On enregistre les quantités de chaque produit
+        $this->saveOrderQuantities($order->getOrderQuantities());
 
         // On capture l'autorisation
         $request = new AuthorizationsCaptureRequest($authorizationId);
         $response = $client->execute($request);
-        var_dump($response);
         if ($response->result->status !== 'COMPLETED') {
             throw new \Exception();
+        }
+        $success = true;
+        // On redirige vers la page de confirmation
+        echo json_encode(['success' => $success]);
+    }
+
+    private function checkStock(object $order): void
+    {
+        $mangaRepository = EntityManager::getRepository(Manga::class);
+
+        foreach ($order->getOrderQuantities() as $orderQuantity) {
+            var_dump($orderQuantity->getManga()->getId());
+            $manga = $mangaRepository->find(
+                $orderQuantity->getManga()->getId()
+            );
+            var_dump($manga);
+            if ($orderQuantity->getQuantity() >= $manga->getStock()) {
+                throw new \Exception();
+            }
+        }
+    }
+
+    private function lockStock(object $order): void
+    {
+        $mangaRepository = EntityManager::getRepository(Manga::class);
+        foreach ($order->getOrderQuantities() as $orderQuantity) {
+            $orderQuantity
+                ->getManga()
+                ->setStock(
+                    $orderQuantity->getManga()->getStock() -
+                        $orderQuantity->getQuantity()
+                );
+            $mangaRepository->updateManga(
+                $orderQuantity->getManga(),
+                $orderQuantity->getManga()->getId()
+            );
+        }
+    }
+
+    private function saveOrder(object $order): void
+    {
+        $orderRepository = EntityManager::getRepository(Order::class);
+        $orderRepository->insertOrder($order);
+    }
+
+    private function saveOrderQuantities(object $orderQuantity): void
+    {
+        foreach ($orderQuantity as $orderQuantity) {
+            $orderQuantityRepository = EntityManager::getRepository(
+                OrderQuantity::class
+            );
+            $orderQuantityRepository->insertOrderQuantity($orderQuantity);
         }
     }
 }

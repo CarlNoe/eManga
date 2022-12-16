@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Address;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
@@ -72,5 +73,18 @@ class UserRepository extends EntityRepository
             ->setParameter('username', $username);
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    public function getAdressesOfUser(int $id): array
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder
+            ->select('a')
+            ->from(Address::class, 'a')
+            ->join('a.users', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use App\Entity\Address;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
@@ -36,6 +36,16 @@ class User
     #[ORM\Column(type: 'string', length: 255, name: 'role')]
     protected string $role;
 
+    #[
+        ManyToMany(
+            targetEntity: Address::class,
+            inversedBy: 'users',
+            cascade: ['persist']
+        )
+    ]
+    #[JoinTable(name: 'user_addresses')]
+    private $addresses;
+
     public function __construct(array $data)
     {
         $this->username = $data['username'];
@@ -44,6 +54,7 @@ class User
         $this->email = $data['email'];
         $this->password = password_hash($data['password'], PASSWORD_DEFAULT);
         $this->role = 'user';
+        $this->addresses = new Collection();
     }
 
     public function getId(): int
@@ -116,9 +127,22 @@ class User
         $this->role = $role;
     }
 
-    public function getAddresses(): mixed
+    public function getAddresses(): Collection
     {
         return $this->addresses;
+    }
+
+    public function setAddresses($addresses): void
+    {
+        $this->addresses = new Collection($addresses->toArray());
+    }
+
+    public function addAddress(Address $address): void
+    {
+        if (!$this->address->contains($address)) {
+            $this->addresses[] = $address;
+            $address->addUser($this);
+        }
     }
 
     public function __toString()

@@ -22,7 +22,6 @@ class Homepage
             password_verify('admin', $role)
                 ? ($role = 'admin')
                 : ($role = 'user');
-            var_dump($user);
         }
         if (
             ($se->has('user') || Cookie::has('user')) &&

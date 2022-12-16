@@ -142,4 +142,18 @@ class Rules
 
         return $errors;
     }
+
+    function numeric(
+        array $data,
+        string $fieldValue,
+        string $errorMessage = 'Only numbers are allowed'
+    ) {
+        $errors = [];
+
+        if (!is_numeric($fieldValue)) {
+            $errors[] = $errorMessage;
+        }
+
+        return $errors;
+    }
 }

@@ -42,6 +42,9 @@ class ruleAddress
                         'max' => 100,
                     ],
                 ],
+                [
+                    'rule' => 'numeric',
+                ],
             ],
             'country' => [
                 [

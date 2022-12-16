@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
-#[ORM\Table(name: 'order')]
+#[ORM\Table(name: 'orders')]
 class Order
 {
     #[ORM\Id]
@@ -26,11 +28,18 @@ class Order
     #[ORM\Column(type: 'float', name: 'order_total')]
     protected float $orderSubTotal;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'])]
     private User|null $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'order', targetEntity: OrderQuantity::class)]
-    private array $orderQuantities = [];
+    #[
+        ORM\OneToMany(
+            mappedBy: 'order',
+            targetEntity: OrderQuantity::class,
+            cascade: ['persist', 'remove'],
+            orphanRemoval: true
+        )
+    ]
+    private $orderQuantities;
 
     public function __construct(
         User $user,
@@ -42,6 +51,7 @@ class Order
         $this->orderStatus = 'pending';
         $this->shippingCost = $shippingCost;
         $this->orderSubTotal = $orderSubTotal;
+        $this->orderQuantities = new ArrayCollection();
     }
 
     public function getId(): int
@@ -104,12 +114,12 @@ class Order
         $this->user = $user;
     }
 
-    public function getOrderQuantities(): array
+    public function getOrderQuantities()
     {
         return $this->orderQuantities;
     }
 
-    public function setOrderQuantities(array $orderQuantities): void
+    public function setOrderQuantities(ArrayCollection $orderQuantities): void
     {
         $this->orderQuantities = $orderQuantities;
     }
@@ -124,16 +134,23 @@ class Order
         $this->shippingCost += $shippingCost;
     }
 
-    public function addOrderQuantity(OrderQuantity $orderQuantity): void
+    public function addOrderQuantity(OrderQuantity $quantity): self
     {
-        $this->orderQuantities[] = $orderQuantity;
+        if (!$this->orderQuantities->contains($quantity)) {
+            $this->orderQuantities[] = $quantity;
+            $quantity->setOrder($this);
+        }
+
+        return $this;
     }
 
-    public function removeOrderQuantity(OrderQuantity $orderQuantity): void
+    public function removeOrderQuantity(OrderQuantity $quantity): self
     {
-        $this->orderQuantities = array_filter(
-            $this->orderQuantities,
-            fn($oq) => $oq->getId() !== $orderQuantity->getId()
-        );
+        if ($this->orderQuantities->contains($quantity)) {
+            $this->orderQuantities->removeElement($quantity);
+            $quantity->setOrder(null);
+        }
+
+        return $this;
     }
 }
