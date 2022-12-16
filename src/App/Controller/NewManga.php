@@ -51,9 +51,10 @@ class NewManga
                 }
             }
         }
-        return new Response(
-            'newManga.html.twig',
-            ['errors' => $errors] + ['allCategories' => $allCategories]
-        );
+        return new Response('newManga.html.twig', [
+            'errors' => $errors,
+            'allCategories' => $allCategories,
+            'isConnected' => $se->has('user'),
+        ]);
     }
 }
