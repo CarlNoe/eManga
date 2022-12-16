@@ -38,6 +38,8 @@ class ResumeOrder
                 User::class
             )->getResumeOrders($user->getId());
         }
+
+        var_dump($orders);
         return new Response('resumeOrder.html.twig', [
             'orders' => $orders,
         ]);
