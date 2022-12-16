@@ -30,7 +30,6 @@ function notify() {
     // Remove the popup after 3 seconds
     setTimeout(function () {
         document.body.removeChild(popup)
-        count = 0
     }, 3000)
 }
 
