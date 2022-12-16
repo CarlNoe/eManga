@@ -5,96 +5,15 @@
 
 {% block body %}
 	<header>
-
-		<nav class="px-2 bg-gray-100 border-gray-200">
-			<div class="container flex flex-wrap items-center justify-between mx-auto">
-				<a href="/" class="flex items-center">
-					<img src="/img/logo.png" class="h-6 mr-3 sm:h-10" alt="Flowbite Logo"/>
-				</a>
-				<button data-collapse-toggle="navbar-multi-level" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-multi-level" aria-expanded="false">
-					<span class="sr-only">Open main menu</span>
-					<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-					</svg>
-				</button>
-				<div class="hidden w-full md:block md:w-auto" id="navbar-multi-level">
-					<ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
-						<li>
-							<a href="/" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0">Home</a>
-						</li>
-						<li>
-							<a href="/login" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Login</a>
-						</li>
-						<li>
-							<a href="/register" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Register</a>
-						</li>
-						<li>
-							<a href="/?disconnect=1" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Disconnect</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-
-		<div class="w-full min-h-[468px] bg-cover bg-center" style="background-image: url('/img/bg-header.png');"></div>
+		{% include '/components/navbar.html.twig' %}
+		<div class="w-full min-h-[25vw] max-h-[468px] bg-cover bg-center" style="background-image: url('/img/bg-header.png');"></div>
 	</header>
 	<main class="bg-gray-100">
 		<section class="bg-gray-100">
 			<h1 class="text-center font-[500] text-xl mt-12 mb-12">TOUS NOS PRODUITS</h1>
-			{# Filters: #}
-			<div class="flex w-full items-center justify-center">
-				<button class="bg-blue-500 rounded pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">Themes</button>
-				<button class="block flex items-center justify-center bg-blue-500 rounded pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
-					<img src="/img/arrow-down.svg" alt="" class="m-[4px]"/>
-					<span>Rating</span>
-				</button>
-				<button class="block flex items-center justify-center bg-blue-500 rounded pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px]">
-					<img src="/img/arrow-down.svg" alt="" class="m-[4px]"/>
-					<span>Price</span>
-				</button>
-			</div>
-			{# Products: #}
-			<div class="flex flex-wrap w-full items-center justify-center">
-				{% for manga in mangas %}
-					<div class="flex flex-col justify-center bg-[#F6F6F6] p-3 rounded-md drop-shadow-xl m-8">
-						<div class="w-[200px] h-[300px] bg-contain bg-no-repeat bg-center" style="background-image: url('{{ manga.image }}');"></div>
-						<div class="flex flex-col justify-center">
-							<a href="manga?id={{manga.id}}" class="text-center font-[600] text-xl w-[200px] break-word h-[5rem] overflow-hidden m-auto hover:opacity-60">{{ manga.title }}</a>
-							<span class="text-center text-blue-800 mt-2 mb-2 text-lg font-bold">{{ manga.price }}€</span>
-							<div class="flex w-full items-center justify-center">
-								<button class="bg-[#D40000] rounded pl-3 pr-3 pt-1 pb-1 text-white font-semibold ml-[10px] mr-[10px] hover:opacity-60" name="addToCart" value='{{manga.id}}'>AJOUT AU PANIER</button>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
+			{% include 'components/home/filters.html.twig' %}
+			{% include 'components/home/mangaList.html.twig' %}
+			{% include 'components/home/pagination.html.twig' %}
 		</section>
-		{# Pagination: #}
-		<div class="flex w-full items-center justify-center mt-12 mb-12">
-			{% if page > 1 %}
-				<a href="/?page=1" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
-					<img src="/img/firstPageicon.png" alt="" class="m-[4px]"/>
-				</a>
-			{% endif %}
-			{% if page > 1 %}
-				<a href="/?page={{page-1}}" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
-					<img src="/img/previousPageIcon.png" alt="" class="m-[4px]"/>
-				</a>
-			{% endif %}
-
-			<p class="text-center font-[500] text-xl">{{page}}</p>
-
-			{% if page < allPages %}
-				<a href="/?page={{page+1}}" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
-					<img src="/img/nextPageicon.png" alt="" class="m-[4px]"/>
-				</a>
-			{% endif %}
-			{% if page < allPages %}
-				<a href="/?page={{allPages}}" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
-					<img src="/img/lastPageicon.png" alt="" class="m-[4px]"/>
-				</a>
-			{% endif %}
-		</div>
 	</main>
 {% endblock %}

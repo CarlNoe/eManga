@@ -25,4 +25,10 @@ class AddressRepository extends EntityRepository
         $this->_em->persist($address);
         $this->_em->flush();
     }
+
+    public function insertAdressesUser(array|Address $address): void
+    {
+        $this->_em->persist($address);
+        $this->_em->flush();
+    }
 }

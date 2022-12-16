@@ -12,20 +12,21 @@ use Framework\Config\Config;
 use App\Entity\Order;
 use App\Entity\OrderQuantity;
 use App\Entity\Manga;
+use App\Entity\User;
+use Doctrine\ORM\Mapping\Entity;
 use Framework\Doctrine\EntityManager;
+
 class Cart
 {
     public function __invoke()
     {
         $session = Session::getInstance();
         $session->start();
-
-        $AdressesOfUser = EntityManager::getRepository(
-            Address::class
-        )->getAdressesOfUser($session->get('user')->getId());
-        foreach ($AdressesOfUser as $value) {
-            $value->setUsers($session->get('user')->getId());
-        }
+        $user = EntityManager::getRepository(User::class)->find(
+            $session->get('user')->getId()
+        );
+        $adresseRepository = EntityManager::getRepository(Address::class);
+        $AdressesOfUser = $adresseRepository->getAdressesOfUser($user->getId());
 
         if (!($session->has('user') || Cookie::has('user'))) {
             header('Location: /');
@@ -34,16 +35,12 @@ class Cart
         if (!empty($_POST)) {
             $ruleAdress = new ruleAddress();
             $errors = $ruleAdress->isValidateAdress($_POST);
-            var_dump($errors);
             if (empty($errors)) {
                 $address = new Address($_POST);
-                EntityManager::getRepository(Address::class)->insertAddress(
-                    $address
-                );
+                $user->addAddress($address);
+                $adresseRepository->insertAddress($address);
             }
         }
-
-        var_dump($AdressesOfUser);
         header('Access-Control-Allow-Origin: *');
 
         $order = $this->createOrder();
@@ -55,10 +52,11 @@ class Cart
         );
 
         return new Response('Cart.html.twig', [
-            '$AdressesOfUser' => $AdressesOfUser,
+            'onlyAddresses' => $this->getOnlyAddresses($AdressesOfUser),
             'orders' => $order,
             'js' => ['addManga.js'],
             'paypal' => $paypal->ui($order),
+            'isConnected' => $session->has('user'),
         ]);
     }
 
@@ -88,5 +86,20 @@ class Cart
             $order->addShippingCost(1);
         }
         return $order;
+    }
+
+    function getOnlyAddresses($AdressesOfUser)
+    {
+        $i = 0;
+        foreach ($AdressesOfUser as $value) {
+            $onlyAddresses[$i]['id'] = $value->getId();
+            $onlyAddresses[$i]['street'] = $value->getStreet();
+            $onlyAddresses[$i]['city'] = $value->getCity();
+            $onlyAddresses[$i]['zipcode'] = $value->getZipCode();
+            $onlyAddresses[$i]['country'] = $value->getCountry();
+            $i++;
+        }
+
+        return $onlyAddresses;
     }
 }

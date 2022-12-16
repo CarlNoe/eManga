@@ -1,0 +1,29 @@
+{% block pagination %}
+
+	<div class="flex w-full items-center justify-center mt-12 mb-12">
+		{% if page > 1 %}
+			<a href="/?page=1" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
+				<img src="/img/firstPageicon.png" alt="" class="m-[4px]"/>
+			</a>
+		{% endif %}
+		{% if page > 1 %}
+			<a href="/?page={{page-1}}" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
+				<img src="/img/previousPageIcon.png" alt="" class="m-[4px]"/>
+			</a>
+		{% endif %}
+
+		<p class="text-center font-[500] text-xl">{{page}}</p>
+
+		{% if page < allPages %}
+			<a href="/?page={{page+1}}" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
+				<img src="/img/nextPageicon.png" alt="" class="m-[4px]"/>
+			</a>
+		{% endif %}
+		{% if page < allPages %}
+			<a href="/?page={{allPages}}" class="block flex items-center justify-center rounded pl-1 pr-1 pt-1 pb-1 m-1 text-white font-semibold hover:opacity-50">
+				<img src="/img/lastPageicon.png" alt="" class="m-[4px]"/>
+			</a>
+		{% endif %}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% block mangaList %}
+
+	<div class="flex flex-wrap w-full items-center justify-center">
+		{% for manga in mangas %}
+			<div class="flex flex-col justify-center bg-[#F6F6F6] py-4 px-8 rounded-md drop-shadow-xl m-8">
+				<div class="w-[200px] h-[300px] bg-contain bg-no-repeat bg-center" style="background-image: url('{{ manga.image }}');"></div>
+				<div class="flex flex-col justify-center">
+					<a href="manga?id={{manga.id}}" class="text-center font-[600] text-xl w-[200px] break-word h-[5rem] overflow-hidden m-auto hover:opacity-60">{{ manga.title }}</a>
+					<span class="text-center text-blue-800 mt-2 mb-2 text-lg font-bold">{{ manga.price }}€</span>
+					<div class="flex w-full items-center justify-center">
+						<button value={{manga.id}} name="addToCart" class="add-to-cart-button bg-[#D40000] rounded p-2 text-white font-semibold ml-[10px] mr-[10px] hover:opacity-60">AJOUT AU PANIER</button>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}

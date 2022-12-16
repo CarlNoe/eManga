@@ -21,11 +21,11 @@ class Register
         if (isset($_POST) && !empty($_POST)) {
             $ruleRegister = new ruleRegister();
             $errors = $ruleRegister->isValidateRegister($_POST);
-            var_dump($errors);
             if (empty($errors)) {
                 $userRepository = EntityManager::getRepository(User::class);
                 $userRepository->insertUser($_POST);
             }
         }
+        return new Response('register.html.twig', ['errors' => $errors]);
     }
 }

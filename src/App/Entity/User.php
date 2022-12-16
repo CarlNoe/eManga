@@ -139,7 +139,7 @@ class User
 
     public function addAddress(Address $address): void
     {
-        if (!$this->address->contains($address)) {
+        if (!$this->addresses->contains($address)) {
             $this->addresses[] = $address;
             $address->addUser($this);
         }

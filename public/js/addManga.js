@@ -1,5 +1,9 @@
 const addToCart = async (data) => {
-    await fetch('http://localhost:9990/js/insertCart.php', {
+    const hostname = window.location.hostname
+    const port = window.location.port
+    const url = `http://${hostname}:${port}/js/insertCart.php`
+    console.log(url)
+    await fetch(url, {
         // On envoie la requête à addToCart.php
         method: 'POST', // On envoie les données en POST')
         headers: {

@@ -1,0 +1,37 @@
+<div class="w-[60vw] h-screen p-16 overflow-auto flex justify-center items-center">
+	<div>
+		<h1 class="text-3xl font-bold mb-5">{{manga.title}}</h1>
+		<div class="flex flex-wrap">
+			{% for categorie in categories %}
+				<div class="bg-blue-700 rounded-lg pl-3 pr-3 pt-1 pb-1 text-white mr-2">
+					{{ categorie }}
+				</div>
+			{% endfor %}
+		</div>
+		<p class="mt-5 text-lg font">
+			Description:</p>
+		<p class="mb-5 overflow-auto">{{ manga.description }}</p>
+		<p class="text-3xl text-blue-800 font-medium mt-4 mb-2">{{manga.price }}€</p>
+
+		{% if manga.stock > 0 %}
+			<p class="text-lg text-blue-800 font-medium mt-4 mb-4">Il reste
+				{{manga.stock}}
+				exemplaire(s) en stock !</p>
+		{% else %}
+			<p class="text-lg text-red-800 font-medium mt-4 mb-4">Ce produit n'est plus en stock !</p>
+		{% endif %}
+
+		<div class="flex">
+			<button id="quantityMinus" class="bg-gray-200 rounded p-5 w-12 h-12 font-semibold hover:opacity-60 flex items-center justify-center">-</button>
+			<input id="currentQuantity" class="bg-white rounded text-center w-12 h-12 font-semibold" type="text" value="1" max="{{manga.stock}}" min="1">
+			<button id="quantityPlus" class="bg-gray-200 rounded p-5 w-12 h-12 font-semibold hover:opacity-60 flex items-center justify-center">+</button>
+		</div>
+
+		<div class="flex mt-5">
+			<button value={{manga.id}} name="addToCart" class="add-to-cart-button bg-[#D40000] rounded p-5 mt-12 text-white font-semibold hover:opacity-60">AJOUT AU PANIER</button>
+			{% if role == 'admin' %}
+				<button id="admin-edit-btn" class="bg-blue-500 rounded p-5 mt-12 text-white font-semibold hover:opacity-60 ml-5">ADMIN EDIT</button>
+			{% endif %}
+		</div>
+	</div>
+</div>

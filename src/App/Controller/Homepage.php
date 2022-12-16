@@ -48,6 +48,7 @@ class Homepage
             'page' => $_GET['page'] ?? 1,
             'allPages' => $mangaRepository->getAllPages(),
             'js' => ['addManga.js'],
+            'isConnected' => $se->has('user'),
         ]);
     }
 }
