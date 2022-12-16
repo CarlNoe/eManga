@@ -91,7 +91,7 @@ class UserRepository extends EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function getResumeOrders(int $id): array
+    public function getOrderList(int $id): array
     {
         $queryBuilder = $this->_em->createQueryBuilder();
         $queryBuilder
@@ -106,7 +106,7 @@ class UserRepository extends EntityRepository
         return $queryBuilder->getQuery()->getArrayResult();
     }
 
-    public function getAllResumeOrders(): array
+    public function getAllOrderList(): array
     {
         $queryBuilder = $this->_em->createQueryBuilder();
         $queryBuilder

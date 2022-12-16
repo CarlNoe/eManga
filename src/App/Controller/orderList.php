@@ -8,7 +8,7 @@ use Framework\HttpMethode\Session;
 use App\Entity\User;
 use Framework\Doctrine\EntityManager;
 
-class ResumeOrder
+class OrderList
 {
     public function __invoke()
     {
@@ -32,15 +32,15 @@ class ResumeOrder
         if ($role === 'admin') {
             $orders = EntityManager::getRepository(
                 User::class
-            )->getAllResumeOrders($user->getId());
+            )->getAllOrderList($user->getId());
         } else {
-            $orders = EntityManager::getRepository(
-                User::class
-            )->getResumeOrders($user->getId());
+            $orders = EntityManager::getRepository(User::class)->getOrderList(
+                $user->getId()
+            );
         }
 
         var_dump($orders);
-        return new Response('resumeOrder.html.twig', [
+        return new Response('orderList.html.twig', [
             'orders' => $orders,
         ]);
     }
