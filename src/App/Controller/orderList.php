@@ -39,7 +39,6 @@ class OrderList
             );
         }
 
-        var_dump($orders);
         return new Response('orderList.html.twig', [
             'orders' => $orders,
         ]);

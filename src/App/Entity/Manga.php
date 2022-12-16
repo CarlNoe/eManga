@@ -17,7 +17,7 @@ class Manga
     #[ORM\Column(type: 'string', length: 255, name: 'title')]
     protected string $title;
 
-    #[ORM\Column(type: 'string', length: 255, name: 'description')]
+    #[ORM\Column(type: 'string', length: 2000, name: 'description')]
     protected string $description;
 
     #[ORM\Column(type: 'string', length: 255, name: 'image')]

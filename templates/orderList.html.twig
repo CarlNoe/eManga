@@ -1,7 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	{% include "components/navbar.html.twig" %}
 
-    {{order}}
-
+	<main class="min-h-screen w-screen bg-gray-100">
+		<div class="w-full flex flex-col">
+			{% for order in orders %}
+				<div class="w-full flex flex-col bg-white shadow-md rounded-md p-4 mb-4">
+					<div class="mb-2">
+						<span class="font-bold">Order ID:</span>
+						{{ order.id }}
+					</div>
+					<div class="mb-2">
+						<span class="font-bold">Order Date:</span>
+						{{ order.orderDate }}
+					</div>
+					<div class="mb-2">
+						<span class="font-bold">Order Status:</span>
+						{{ order.orderStatus }}
+					</div>
+					<div class="mb-2">
+						<span class="font-bold">Shipping Cost:</span>
+						{{ order.shippingCost }}
+					</div>
+					<div class="mb-2">
+						<span class="font-bold">Order Subtotal:</span>
+						{{ order.orderSubTotal }}
+					</div>
+					<div class="mb-2">
+						<span class="font-bold">Order Quantities:</span>
+						<ul>
+							{% for item in order.orderQuantities %}
+								<li>
+									{{ item.quantity }}
+									x
+									{{ item.manga.title }}
+									({{ item.price }}
+									each)
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</main>
 {% endblock %}

@@ -79,8 +79,9 @@ class Cart
         }
         $order = new Order($user, 0, 0, $address);
 
-        $cart = json_decode(Cookie::get('cart'), true);
+        $cart = Cookie::get('cart');
         if ($cart !== null) {
+            $cart = json_decode($cart, true);
             foreach ($cart as $key => $quantity) {
                 $key = str_replace('id', '', $key);
                 $manga = $mangaRepository->find($key);
@@ -95,6 +96,8 @@ class Cart
                 $order->addOrderSubTotal($manga->getPrice() * $quantity);
                 $order->addShippingCost(1);
             }
+            $order->addShippingCost(1);
+        } else {
             $order->addShippingCost(1);
         }
         return $order;
