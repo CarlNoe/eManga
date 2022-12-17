@@ -16,7 +16,11 @@ $nextData = getNextDataFromApi($api_url);
 
 $entityManager = EntityManager::getInstance();
 
-insertAllDataFromApi($data, $entityManager);
+for ($i = 1; $i < 8; $i++) {
+    insertAllDataFromApi($data, $entityManager);
+    $data = getDataFromApi($nextData);
+    $nextData = getNextDataFromApi($nextData);
+}
 
 function insertAllDataFromApi($data, $entityManager)
 {
