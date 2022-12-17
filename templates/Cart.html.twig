@@ -39,32 +39,34 @@
 				<p class="text-xl font-semibold">Total</p>
 				<p class="text-xl font-semibold">{{ orders.OrderSubTotal + orders.shippingCost }}€</p>
 			</div>
-
+				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" id='deleteCart' ">Vider le panier</button>
 		</div>
 		<aside class="w-1/4 p-4 m-16 rounded-lg bg-white h-[calc(100%-128px)] shadow-md">
 			<h2 class="text-2xl font-bold mb-4">Adresse de livraison</h2>
 			<form method='post' action='cart' class="flex flex-col items-center">
 				<div class="flex flex-wrap">
 					<input type='text' name='street' placeholder='street' class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+					{% for error in errors.street%}
+						<p class="text-red-500 text-xs italic">{{error}}</p>
+					{% endfor %}
 					<input type='text' name='city' placeholder='city' class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+					{% for error in errors.street%}
+						<p class="text-red-500 text-xs italic">{{error}}</p>
+					{% endfor %}
 					<input type='text' name='zipCode' placeholder='zipCode' class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+					{% for error in errors.street%}
+						<p class="text-red-500 text-xs italic">{{error}}</p>
+					{% endfor %}
 					<input type='text' name='country' placeholder='country' class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+					{% for error in errors.street%}
+						<p class="text-red-500 text-xs italic">{{error}}</p>
+					{% endfor %}
 				</div>
-				<input type='submit' value='Je paye' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+				<input type='submit' value='Rajouter une adresse' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 			</form>
 			{{paypal | raw}}
 		</aside>
-	</main>
-	<form action='cart' method='GET'>
-		<select name="address" id="address">
-
-			{% for addresse in onlyAddresses %}
-				<option value="{{ addresse.id }}">{{ addresse.street }}
-					{{ addresse.city }}
-					{{ addresse.zipCode }}
-					{{ addresse.country }}</option>
-			{% endfor %}
-		</select>
-		<button  type='submit' for="address">Choisir une adresse</button>
+		
 	</form>
+	</main>
 {% endblock %}

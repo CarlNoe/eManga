@@ -21,6 +21,9 @@ class NewManga
         if ($se->has('user')) {
             $role = $se->get('user')->getRole();
         }
+        if ($role !== 'admin') {
+            header('Location: /');
+        }
         $categoriesRepository = EntityManager::getRepository(Categories::class);
         $allCategories = $categoriesRepository->findAll();
 

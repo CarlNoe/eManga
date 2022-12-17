@@ -57,9 +57,10 @@ class Cart
         );
 
         return new Response('Cart.html.twig', [
+            'errors' => $errors ?? [],
             'onlyAddresses' => $this->getOnlyAddresses($AdressesOfUser),
             'orders' => $order,
-            'js' => ['addManga.js'],
+            'js' => ['addManga.js', 'removeManga.js'],
             'paypal' => $paypal->ui($order),
             'isConnected' => $session->has('user'),
         ]);
@@ -105,6 +106,7 @@ class Cart
 
     function getOnlyAddresses($AdressesOfUser)
     {
+        $onlyAddresses = [];
         $i = 0;
         foreach ($AdressesOfUser as $value) {
             $onlyAddresses[$i]['id'] = $value->getId();

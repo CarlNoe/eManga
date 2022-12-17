@@ -24,6 +24,11 @@ class Register
             if (empty($errors)) {
                 $userRepository = EntityManager::getRepository(User::class);
                 $userRepository->insertUser($_POST);
+                $user = $userRepository->findOneBy([
+                    'email' => $_POST['email'],
+                ]);
+                $se->set('user', $user);
+                header('Location: /');
             }
         }
         return new Response('register.html.twig', ['errors' => $errors]);
