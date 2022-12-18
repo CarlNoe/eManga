@@ -65,3 +65,7 @@ Pour lancer le projet, ouvrez une invite de commande et naviguez jusqu'au dossie
 php -S localhost:{port}
 ```
 Remplacez {port} par le numéro de port de votre choix (par exemple, 8000). Vous pourrez alors accéder au projet en ouvrant votre navigateur et en allant sur l'adresse localhost:{port}.
+
+
+
+Projet PHP licence pro WMCE | CARL Noé, COURS Nathan
