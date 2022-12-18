@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/CarlNoe/eManga">
-    <img src="./img/Logo.png" alt="Logo" width="80" height="80">
+    <img src="/public/img/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">eManga</h3>
