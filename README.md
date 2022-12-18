@@ -6,8 +6,6 @@
   <a href="https://github.com/CarlNoe/eManga">
     <img src="/public/img/Logo.png" alt="Logo" height="80">
   </a>
-
-<h3 align="center">eManga</h3>
 </div>
 
 <!-- GETTING STARTED -->
